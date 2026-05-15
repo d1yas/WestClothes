@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WestClothes — Premium Streetwear</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash-screen">
+  <div class="splash-logo">WestClothes</div>
+  <div class="splash-subtitle">Premium Streetwear</div>
+  <div class="splash-line"></div>
+  <div class="splash-dots">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<header>
+  <a class="logo" href="#">WestClothes</a>
+  <div class="header-right">
+  </div>
+</header>
+
+<section class="hero">
+  <h1>WEST<span>CLOTHES</span></h1>
+  <p>Премиум одежда для твоего стиля</p>
+</section>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" id="search" type="text" placeholder="Поиск товаров..." oninput="renderProducts()">
+  </div>
+  <div class="filters" id="filters"></div>
+</div>
+
+<div class="results-info" id="results-info"></div>
+<div class="grid" id="grid"></div>
+
+<footer>
+  <p>© 2025 WestClothes — Свяжитесь с нами в <a href="https://t.me/admin" target="_blank">Telegram</a></p>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-wrap">
+    <div class="modal" id="modal-box">
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      <div class="modal-img" id="modal-img"></div>
+      <div class="modal-body">
+        <div class="modal-cat" id="modal-cat"></div>
+        <div class="modal-name" id="modal-name"></div>
+        <div class="modal-desc" id="modal-desc"></div>
+        <div class="modal-sizes">
+          <label>Выберите размер</label>
+          <div class="size-btns" id="size-btns"></div>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-price" id="modal-price"></div>
+          <button class="modal-order-btn" onclick="orderProduct()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-6.5 9a.75.75 0 01-1.18.072l-3-3.5a.75.75 0 011.136-.972l2.41 2.81 5.957-8.237a.75.75 0 011.177.827z"/>
+            </svg>
+            Заказать в Telegram
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="admin-login-overlay">
+  <div class="login-box">
+    <h2>АДМИН</h2>
+    <p>Введите пароль для доступа к панели управления</p>
+    <div class="login-field">
+      <label>Пароль</label>
+      <input type="password" id="admin-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <div class="login-error" id="login-error">Неверный пароль</div>
+    <button class="btn-primary" onclick="adminLogin()">Войти</button>
+    <br><br>
+    <button class="btn-secondary" style="width:100%" onclick="closeAdminLogin()">Отмена</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="logo">WestClothes</span>
+      <span class="admin-title">/ Управление товарами</span>
+    </div>
+    <div class="admin-header-right">
+      <button class="btn-secondary" onclick="closeAdmin()">← На сайт</button>
+      <button class="btn-danger" onclick="adminLogout()">Выйти</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="admin-stats">
+      <div class="stat-card"><div class="stat-label">Всего товаров</div><div class="stat-value" id="stat-total">0</div></div>
+      <div class="stat-card"><div class="stat-label">Категорий</div><div class="stat-value" id="stat-cats">0</div></div>
+      <div class="stat-card"><div class="stat-label">Новинок</div><div class="stat-value" id="stat-new">0</div></div>
+      <div class="stat-card"><div class="stat-label">Хитов</div><div class="stat-value" id="stat-hot">0</div></div>
+    </div>
+
+    <div class="admin-section-header">
+      <h2>Товары</h2>
+      <button class="btn-primary" style="width:auto;padding:10px 22px;" onclick="toggleForm()">+ Добавить товар</button>
+    </div>
+
+    <div class="product-form" id="product-form">
+      <h3 id="form-title">Новый товар</h3>
+      <input type="hidden" id="edit-id">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Название *</label>
+          <input type="text" id="f-name" placeholder="Белая классика">
+        </div>
+        <div class="form-field">
+          <label>Категория *</label>
+          <input type="text" id="f-cat" placeholder="Базовые" list="cat-list">
+          <datalist id="cat-list"></datalist>
+        </div>
+        <div class="form-field">
+          <label>Цена (сум) *</label>
+          <input type="number" id="f-price" placeholder="990">
+        </div>
+        <div class="form-field">
+          <label>Значок</label>
+          <select id="f-badge">
+            <option value="">— Нет —</option>
+            <option value="new">Новинка</option>
+            <option value="hot">🔥 Хит</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label>Описание *</label>
+          <textarea id="f-desc" rows="2" placeholder="Краткое описание товара..."></textarea>
+        </div>
+        <div class="form-field full">
+          <label>Фото — эмодзи или ссылка на картинку</label>
+          <div class="img-row">
+            <div class="img-preview" id="img-preview">👕</div>
+            <div class="form-field">
+              <input type="text" id="f-img" placeholder="👕  или  https://example.com/photo.jpg" oninput="previewImg(this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" style="width:auto;padding:12px 28px;" onclick="saveProduct()">💾 Сохранить</button>
+        <button class="btn-secondary" onclick="cancelForm()">Отмена</button>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Фото</th>
+            <th>Товар</th>
+            <th>Цена</th>
+            <th>Метка</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon"></span>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
