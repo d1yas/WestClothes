@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — WestClothes</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #000000;
+    --muted: #666666;
+    --border: #e5e5e5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Archivo', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .logo {
+    font-size: 1.8rem; letter-spacing: 3px; color: var(--text);
+    text-decoration: none; font-weight: 800;
+  }
+
+  /* MAIN */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* BIG 404 BACKGROUND */
+  .bg-404 {
+    position: absolute;
+    font-size: clamp(200px, 40vw, 400px);
+    font-weight: 900;
+    letter-spacing: -10px;
+    color: #f0f0f0;
+    user-select: none;
+    z-index: 0;
+    line-height: 1;
+    animation: floatBg 6s ease-in-out infinite;
+  }
+  @keyframes floatBg {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* CONTENT */
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 560px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .title {
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 400;
+    animation: fadeUp 0.5s 0.15s ease both;
+  }
+
+  .path-info {
+    display: inline-block;
+    background: #f5f5f5;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 8px 16px;
+    font-family: monospace;
+    margin-bottom: 40px;
+    animation: fadeUp 0.5s 0.2s ease both;
+    word-break: break-all;
+    max-width: 100%;
+  }
+
+  .actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.25s ease both;
+  }
+
+  .btn-main {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+  }
+  .btn-main:hover { opacity: 0.75; }
+
+  .btn-ghost {
+    background: transparent;
+    color: #000;
+    border: 1px solid #000;
+    padding: 13px 28px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: #000; color: #fff; }
+
+  /* DIVIDER LINE */
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: #000;
+    margin: 0 auto 32px;
+    animation: fadeUp 0.5s 0.18s ease both;
+  }
+
+  /* SUGGESTION STRIP */
+  .suggestions {
+    margin-top: 64px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    width: 100%;
+    max-width: 680px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.5s 0.35s ease both;
+  }
+  .suggestions-label {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .suggestion-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .suggestion-link {
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .suggestion-link:hover { background: #000; color: #fff; border-color: #000; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+  footer a { color: var(--text); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    main { padding: 40px 20px; }
+    .actions { flex-direction: column; align-items: center; }
+    .btn-main, .btn-ghost { width: 100%; justify-content: center; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/">WestClothes</a>
+</header>
+
+<main>
+  <div class="bg-404">404</div>
+
+  <div class="content">
+    <div class="tag">Ошибка 404</div>
+    <h1 class="title">СТРАНИЦА<br>НЕ НАЙДЕНА</h1>
+    <div class="divider"></div>
+    <p class="subtitle">Такого адреса не существует</p>
+    <div class="path-info" id="path-display">/unknown</div>
+    <div class="actions">
+      <a class="btn-main" href="/">
+        ← Вернуться в магазин
+      </a>
+      <a class="btn-ghost" href="https://t.me/data_n0thing" target="_blank">
+        Написать в Telegram
+      </a>
+    </div>
+  </div>
+
+  <div class="suggestions">
+    <div class="suggestions-label">Может быть, вы искали</div>
+    <div class="suggestion-links">
+      <a class="suggestion-link" href="/#Базовые">Базовые</a>
+      <a class="suggestion-link" href="/#Принты">Принты</a>
+      <a class="suggestion-link" href="/#Коллабы">Коллабы</a>
+      <a class="suggestion-link" href="/#Лимитед">Лимитед</a>
+      <a class="suggestion-link" href="/#Спорт">Спорт</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 WestClothes — Свяжитесь с нами в <a href="https://t.me/data_n0thing" target="_blank">Telegram</a></p>
+</footer>
+
+<script>
+  // Показываем текущий путь
+  const pathDisplay = document.getElementById('path-display');
+  const path = window.location.pathname + window.location.search + window.location.hash;
+  pathDisplay.textContent = path && path !== '/' ? path : '/404';
+</script>
+
+</body>
+</html>
