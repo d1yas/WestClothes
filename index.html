@@ -2,434 +2,359 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WestClothes — Premium Streetwear</title>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>khikmatillaev's</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #ffffff; --bg-light: #f8f8f8; --surface: #fafafa;
-    --border: #e5e5e5; --accent: #000; --accent2: #222;
-    --text: #000; --muted: #666; --card-radius: 0px;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:'Archivo',sans-serif; min-height:100vh; line-height:1.6; }
+:root {
+  --crimson: #AE1F23;
+  --deep: #780000;
+  --darkest: #3d0000;
+  --gold: #c9a96e;
+  --gold-light: #e8d5b0;
+  --cream: #f9f5ee;
+  --text: #1a0a0a;
+  --muted: #7a5c5c;
+  --border: rgba(174,31,35,0.15);
+  --surface: #fff9f5;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { background:var(--cream); color:var(--text); font-family:'Jost',sans-serif; min-height:100vh; line-height:1.6; overflow-x:hidden; }
 
-  /* HEADER */
-  header {
-    position:sticky; top:0; z-index:100;
-    background:#fff; border-bottom:1px solid var(--border);
-    padding:20px 40px; display:flex; align-items:center; justify-content:space-between;
-    box-shadow:0 1px 3px rgba(0,0,0,.08);
-  }
-  .logo { font-size:1.8rem; letter-spacing:3px; color:var(--text); text-decoration:none; font-weight:800; animation:spin360 3s ease-in-out; }
-  @keyframes spin360 { from { transform:rotateY(0deg); } to { transform:rotateY(360deg); } }
-  .header-right { display:flex; gap:12px; align-items:center; }
-  .cart-btn {
-    background:var(--accent); color:#000; border:none; padding:10px 22px; border-radius:30px;
-    font-family:'Manrope',sans-serif; font-weight:700; font-size:.85rem; cursor:pointer;
-    display:flex; align-items:center; gap:8px; transition:transform .15s,background .15s;
-  }
-  .cart-btn:hover { transform:scale(1.04); background:#d4eb2a; }
-  .cart-badge {
-    background:#000; color:var(--accent); border-radius:50%; width:20px; height:20px;
-    display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800;
-  }
-  .admin-link-btn {
-    background:var(--surface2); color:var(--muted); border:1px solid var(--border);
-    padding:9px 16px; border-radius:30px; font-family:'Manrope',sans-serif;
-    font-weight:600; font-size:.8rem; cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:6px;
-  }
-  .admin-link-btn:hover { border-color:var(--accent); color:var(--accent); }
+/* SPLASH */
+#splash {
+  position:fixed; inset:0; z-index:9999;
+  background:var(--deep);
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  transition:opacity .8s ease, visibility .8s;
+}
+#splash.hide { opacity:0; visibility:hidden; pointer-events:none; }
+.splash-brand {
+  font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,8vw,3.2rem); font-style:italic;
+  color:var(--gold); letter-spacing:2px; font-weight:400;
+  animation:fadeUp .9s ease both;
+}
+.splash-line { width:0; height:1px; background:var(--gold); margin:20px auto 0; animation:lineGrow 1s .5s ease forwards; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes lineGrow { to{width:120px} }
 
-  /* HERO */
-  .hero { 
-    padding:80px 40px; text-align:center; position:relative; overflow:hidden;
-    background:linear-gradient(180deg,#000 0%,#1a1a1a 100%); color:#fff;
-  }
-  .hero::before { display:none; }
-  .hero::after { display:none; }
-  .hero h1 { font-size:clamp(3rem,10vw,6rem); letter-spacing:4px; line-height:1.1; animation:fadeUp .7s ease both; font-weight:800; text-transform:uppercase; }
-  .hero h1 span { color:#fff; }
-  .hero p { margin-top:20px; color:#ccc; font-size:1rem; letter-spacing:2px; text-transform:uppercase; animation:fadeUp .7s .1s ease both; font-weight:400; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+/* HEADER */
+header {
+  position:sticky; top:0; z-index:100;
+  background:var(--deep); border-bottom:1px solid rgba(201,169,110,.2);
+  padding:16px 48px; display:flex; align-items:center; justify-content:center;
+}
+.logo {
+  font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-style:italic;
+  color:var(--gold); text-decoration:none; font-weight:400; letter-spacing:1px;
+}
 
-  /* SPLASH SCREEN */
-  #splash-screen {
-    display:flex; position:fixed; inset:0; z-index:9999;
-    background:linear-gradient(135deg, #000 0%, #1a1a1a 50%, #2a2a2a 100%);
-    align-items:center; justify-content:center; flex-direction:column;
-    animation:splashFadeOut .6s ease-out forwards;
-    animation-delay:3.2s;
-  }
-  #splash-screen.hidden { display:none; }
-  .splash-logo {
-    font-size:4rem; letter-spacing:4px; color:#fff; font-weight:800;
-    text-transform:uppercase; margin-bottom:24px;
-    animation:splashLogoIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    text-shadow:0 10px 30px rgba(0,0,0,0.5);
-  }
-  .splash-subtitle {
-    font-size:0.9rem; letter-spacing:2px; color:#888;
-    text-transform:uppercase; font-weight:400;
-    animation:splashSubtitleIn 0.8s ease-out 0.3s forwards;
-    opacity:0;
-  }
-  .splash-line {
-    width:40px; height:2px; background:#fff;
-    margin-top:20px; border-radius:1px;
-    animation:splashLineExpand 0.8s ease-out 0.6s forwards;
-    opacity:0;
-  }
-  .splash-dots {
-    display:flex; gap:8px; margin-top:40px;
-  }
-  .splash-dot {
-    width:8px; height:8px; border-radius:50%; background:#fff;
-    animation:splashDotBounce 1.2s ease-in-out infinite;
-    opacity:0.4;
-  }
-  .splash-dot:nth-child(1) { animation-delay:0s; }
-  .splash-dot:nth-child(2) { animation-delay:0.2s; }
-  .splash-dot:nth-child(3) { animation-delay:0.4s; }
+/* HERO */
+.hero {
+  background:linear-gradient(160deg, var(--darkest) 0%, var(--deep) 50%, var(--crimson) 100%);
+  padding:80px 24px 64px; text-align:center; position:relative; overflow:hidden;
+}
+.hero::after {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a96e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.hero-title {
+  font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,8vw,6.5rem);
+  font-style:italic; color:#fff; font-weight:400; letter-spacing:2px;
+  line-height:1; position:relative;
+}
+.hero-title span { color:var(--gold); }
+.hero-sub {
+  font-family:'Jost',sans-serif; font-size:.75rem; letter-spacing:4px;
+  text-transform:uppercase; color:var(--gold-light); margin-top:16px; font-weight:300; position:relative;
+}
 
-  @keyframes splashLogoIn {
-    from { opacity:0; transform:scale(0.8) rotateY(-45deg); }
-    to { opacity:1; transform:scale(1) rotateY(0deg); }
-  }
-  @keyframes splashSubtitleIn {
-    from { opacity:0; transform:translateY(10px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  @keyframes splashLineExpand {
-    from { opacity:0; width:0; }
-    to { opacity:1; width:40px; }
-  }
-  @keyframes splashDotBounce {
-    0%, 100% { transform:translateY(0); opacity:0.4; }
-    50% { transform:translateY(-12px); opacity:1; }
-  }
-  @keyframes splashFadeOut {
-    from { opacity:1; }
-    to { opacity:0; pointer-events:none; }
-  }
+/* CONTROLS */
+.controls {
+  padding:16px 20px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  background:var(--surface); border-bottom:1px solid var(--border);
+}
+.search-wrap { position:relative; flex:1; min-width:140px; }
+.search-input {
+  width:100%; background:#fff; border:1px solid var(--border);
+  padding:10px 14px 10px 38px; color:var(--text); font-family:'Jost',sans-serif;
+  font-size:.88rem; outline:none; transition:border-color .2s; border-radius:0;
+  -webkit-appearance:none;
+}
+.search-input:focus { border-color:var(--crimson); }
+.search-input::placeholder { color:var(--muted); }
+.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+.filters { display:flex; gap:7px; flex-wrap:wrap; width:100%; }
+.filter-btn {
+  background:transparent; border:1px solid var(--border); padding:7px 13px;
+  color:var(--muted); font-family:'Jost',sans-serif; font-size:.7rem; font-weight:500;
+  letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.filter-btn:hover,.filter-btn.active { background:var(--crimson); color:#fff; border-color:var(--crimson); }
 
-  /* CONTROLS */
-  .controls { padding:30px 40px; display:flex; gap:20px; flex-wrap:wrap; align-items:center; border-bottom:1px solid var(--border); }
-  .search-wrap { position:relative; flex:1; min-width:200px; }
-  .search-wrap svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
-  .search-input {
-    width:100%; background:#f5f5f5; border:1px solid var(--border); border-radius:2px;
-    padding:11px 16px 11px 42px; color:var(--text); font-family:'Archivo',sans-serif; font-size:.9rem; outline:none; transition:all .2s;
-  }
-  .search-input::placeholder { color:var(--muted); }
-  .search-input:focus { background:#fff; border-color:var(--text); }
-  .filters { display:flex; gap:12px; flex-wrap:wrap; overflow-x:auto; padding-bottom:4px; }
-  .filter-btn {
-    background:transparent; border:1px solid var(--text); border-radius:0; padding:8px 16px;
-    color:var(--text); font-family:'Archivo',sans-serif; font-size:.85rem; font-weight:600; cursor:pointer; transition:all .2s; letter-spacing:.5px;
-    white-space:nowrap;
-  }
-  .filter-btn:hover { background:var(--text); color:#fff; }
-  .filter-btn.active { background:var(--text); color:#fff; }
+.results-bar { padding:10px 20px; font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:var(--cream); border-bottom:1px solid var(--border); }
 
-  .results-info { padding:20px 40px; color:var(--muted); font-size:.75rem; letter-spacing:1px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+/* GRID */
+.grid { padding:20px; display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
 
-  /* GRID */
-  .grid { padding:40px; display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:24px; }
+/* CARD */
+.card { cursor:pointer; animation:fadeUp .5s ease both; }
+.card-img {
+  width:100%; aspect-ratio:3/4; background:linear-gradient(135deg,#f0e8e0,#e8d5c8);
+  display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative;
+  overflow:hidden;
+}
+.card-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.card-img .ep { font-size:3.5rem; }
+.badge {
+  position:absolute; top:0; left:0; z-index:2;
+  background:var(--crimson); color:#fff;
+  font-size:.52rem; font-weight:600; padding:4px 9px; letter-spacing:1.5px; text-transform:uppercase;
+}
+.badge.hot { background:var(--deep); }
+.img-dots { position:absolute; bottom:7px; left:50%; transform:translateX(-50%); display:flex; gap:4px; z-index:2; }
+.img-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.5); transition:background .3s; }
+.img-dot.active { background:#fff; }
 
-  /* CARD */
-  .card {
-    background:#fff; border:none; border-radius:0;
-    overflow:visible; cursor:pointer; transition:opacity .3s ease; animation:fadeUp .5s ease both;
-  }
-  .card:hover { opacity:.7; }
-  .card-img {
-    width:100%; aspect-ratio:1/1; background:#f0f0f0;
-    display:flex; align-items:center; justify-content:center; font-size:5rem; position:relative; overflow:hidden;
-    transition: opacity 0.3s ease;
-  }
-  .card-img img { width:100%; height:100%; object-fit:cover; }
-  .card-img .badge {
-    position:absolute; top:12px; left:12px; background:var(--text); color:#fff;
-    font-size:.65rem; font-weight:700; padding:6px 10px; border-radius:0; letter-spacing:1px; text-transform:uppercase;
-  }
-  .card-img .badge.new { background:var(--text); color:#fff; }
-  .card-body { padding:16px 0; }
-  .card-cat { font-size:.65rem; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; font-weight:600; }
-  .card-name { font-size:.95rem; font-weight:600; margin-bottom:8px; line-height:1.3; }
-  .card-desc { font-size:.75rem; color:var(--muted); margin-bottom:12px; line-height:1.4; }
-  .card-footer { display:flex; align-items:center; justify-content:space-between; }
-  .card-price { font-size:1.1rem; letter-spacing:.5px; color:var(--text); font-weight:700; }
-  .card-price span { font-size:.75rem; color:var(--muted); font-weight:400; }
-  .order-btn {
-    background:var(--text); color:#fff; border:none; padding:9px 18px; border-radius:0;
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:.75rem; cursor:pointer; transition:all .2s;
-  }
-  .order-btn:hover { opacity:.8; }
-  .no-results { grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--muted); }
-  .no-results .icon { font-size:3rem; margin-bottom:16px; }
+.card-body { padding:10px 0 0; }
+.card-cat { font-size:.58rem; color:var(--crimson); letter-spacing:2px; text-transform:uppercase; margin-bottom:3px; font-weight:500; }
+.card-name { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:500; margin-bottom:3px; line-height:1.3; }
+.card-desc { font-size:.7rem; color:var(--muted); margin-bottom:8px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.card-footer { display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap; }
+.card-price { font-family:'Cormorant Garamond',serif; font-size:.95rem; font-weight:600; color:var(--deep); white-space:nowrap; }
+.card-price span { font-family:'Jost',sans-serif; font-size:.6rem; color:var(--muted); font-weight:400; }
+.order-btn {
+  background:var(--deep); color:#fff; border:none; padding:7px 11px;
+  font-family:'Jost',sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.8px;
+  text-transform:uppercase; cursor:pointer; transition:background .2s; white-space:nowrap;
+}
+.order-btn:hover,.order-btn:active { background:var(--crimson); }
+.no-results { grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--muted); }
 
-  /* PRODUCT MODAL */
-  .modal-overlay {
-    display:none; position:fixed; inset:0; background:rgba(255,255,255,.95);
-    backdrop-filter:blur(0); z-index:200; align-items:center; justify-content:center; padding:40px 20px;
-  }
-  .modal-overlay.open { display:flex; }
-  .modal {
-    background:#fff; border:none; border-radius:0;
-    max-width:600px; width:100%; max-height:90vh; overflow-y:auto; animation:modalIn .25s ease;
-    box-shadow:0 10px 40px rgba(0,0,0,.1);
-  }
-  @keyframes modalIn { from{opacity:0;transform:scale(.98)} to{opacity:1;transform:scale(1)} }
-  .modal-img {
-    width:100%; aspect-ratio:4/3; background:#f0f0f0;
-    display:flex; align-items:center; justify-content:center; font-size:8rem; border-radius:0; overflow:hidden;
-  }
-  .modal-img img { width:100%; height:100%; object-fit:cover; }
-  .modal-body { padding:32px; }
-  .modal-cat { font-size:.7rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; font-weight:600; }
-  .modal-name { font-size:1.8rem; letter-spacing:1px; line-height:1.2; margin-bottom:16px; font-weight:700; }
-  .modal-desc { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:24px; }
-  .modal-sizes { margin-bottom:28px; }
-  .modal-sizes label { display:block; font-size:.7rem; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:12px; font-weight:600; }
-  .size-btns { display:flex; gap:10px; flex-wrap:wrap; }
-  .size-btn {
-    background:#f5f5f5; border:1px solid var(--border); border-radius:0; padding:10px 16px;
-    color:var(--text); font-family:'Archivo',sans-serif; font-size:.85rem; font-weight:600; cursor:pointer; transition:all .2s;
-  }
-  .size-btn:hover { border-color:var(--text); }
-  .size-btn.selected { background:var(--text); color:#fff; border-color:var(--text); }
-  .modal-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-  .modal-price { font-size:1.8rem; color:var(--text); letter-spacing:1px; font-weight:700; }
-  .modal-order-btn {
-    flex:1; background:var(--text); color:#fff; border:none; padding:14px 24px; border-radius:0;
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:.9rem; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; gap:8px; transition:all .2s;
-  }
-  .modal-order-btn:hover { opacity:.8; }
-  .modal-close {
-    position:absolute; top:24px; right:24px; background:none; border:none; border-radius:0;
-    width:32px; height:32px; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; color:var(--text); font-size:1.2rem; transition:opacity .2s; z-index:10;
-  }
-  .modal-close:hover { opacity:.6; }
-  .modal-wrap { position:relative; }
+/* PRODUCT MODAL */
+.modal-overlay {
+  display:none; position:fixed; inset:0; background:rgba(60,0,0,.6);
+  z-index:300; align-items:flex-end; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:#fff; width:100%; max-width:600px; max-height:92vh; overflow-y:auto;
+  animation:slideUp .3s ease; position:relative;
+}
+@keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
 
-  footer { border-top:1px solid var(--border); padding:60px 40px 40px; text-align:center; color:var(--muted); font-size:.75rem; letter-spacing:1px; background:#fff; }
-  footer a { color:var(--text); text-decoration:none; font-weight:600; }
+/* Gallery */
+.modal-gallery { position:relative; width:100%; aspect-ratio:1/1; background:#f0e8e0; overflow:hidden; touch-action:pan-y; }
+.gallery-track { display:flex; height:100%; transition:transform .35s ease; will-change:transform; }
+.gallery-slide { min-width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:6rem; flex-shrink:0; }
+.gallery-slide img { width:100%; height:100%; object-fit:cover; }
+.g-arrow {
+  position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.38);
+  border:none; color:#fff; width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; z-index:3; font-size:1.1rem; transition:background .2s;
+}
+.g-arrow:hover { background:rgba(0,0,0,.65); }
+.g-arrow.prev { left:8px; }
+.g-arrow.next { right:8px; }
+.g-dots { position:absolute; bottom:9px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:3; }
+.g-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.5); cursor:pointer; transition:background .3s; }
+.g-dot.active { background:#fff; }
 
-  /* ════════════ ADMIN ════════════ */
+.modal-body { padding:20px 20px 32px; }
+.modal-cat { font-size:.6rem; color:var(--crimson); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+.modal-name { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:500; margin-bottom:8px; line-height:1.2; }
+.modal-desc { color:var(--muted); font-size:.83rem; line-height:1.6; margin-bottom:18px; }
+.modal-sizes label { display:block; font-size:.6rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; font-weight:500; }
+.size-btns { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:20px; }
+.size-btn {
+  border:1px solid var(--border); padding:9px 13px; background:#fff;
+  font-family:'Jost',sans-serif; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s;
+  min-width:46px; text-align:center;
+}
+.size-btn:hover,.size-btn:active { border-color:var(--crimson); color:var(--crimson); }
+.size-btn.selected { background:var(--deep); color:#fff; border-color:var(--deep); }
+.modal-footer { display:flex; align-items:center; gap:12px; }
+.modal-price { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--deep); white-space:nowrap; }
+.modal-order-btn {
+  flex:1; background:var(--deep); color:#fff; border:none; padding:14px 10px;
+  font-family:'Jost',sans-serif; font-size:.76rem; font-weight:500; letter-spacing:1.2px;
+  text-transform:uppercase; cursor:pointer; transition:background .2s;
+}
+.modal-order-btn:hover,.modal-order-btn:active { background:var(--crimson); }
+.modal-close {
+  position:absolute; top:10px; right:10px; background:rgba(0,0,0,.45); border:none;
+  color:#fff; width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:.9rem; z-index:5;
+}
+.modal-close:hover { background:rgba(0,0,0,.7); }
 
-  /* LOGIN */
-  #admin-login-overlay {
-    display:none; position:fixed; inset:0; background:rgba(0,0,0,.6);
-    backdrop-filter:blur(4px); z-index:500; align-items:center; justify-content:center;
-  }
-  #admin-login-overlay.open { display:flex; }
-  .login-box {
-    background:#fff; border:none; border-radius:0;
-    padding:40px; width:100%; max-width:380px; animation:modalIn .25s ease;
-    box-shadow:0 10px 40px rgba(0,0,0,.15);
-  }
-  .login-box h2 { font-size:1.8rem; letter-spacing:2px; margin-bottom:10px; color:var(--text); font-weight:700; }
-  .login-box p { color:var(--muted); font-size:.85rem; margin-bottom:28px; }
-  .login-field { margin-bottom:16px; }
-  .login-field label { display:block; font-size:.7rem; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; font-weight:600; }
-  .login-field input {
-    width:100%; background:#f5f5f5; border:1px solid var(--border); border-radius:0;
-    padding:11px 14px; color:var(--text); font-family:'Archivo',sans-serif; font-size:.9rem; outline:none; transition:border-color .2s;
-  }
-  .login-field input:focus { border-color:var(--text); background:#fff; }
-  .login-error { color:#d32f2f; font-size:.8rem; margin-bottom:12px; display:none; }
-  .btn-primary {
-    width:100%; background:var(--text); color:#fff; border:none; padding:12px; border-radius:0;
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:.9rem; cursor:pointer; transition:opacity .2s; margin-top:4px;
-  }
-  .btn-primary:hover { opacity:.9; }
-  .btn-secondary {
-    background:#f5f5f5; color:var(--text); border:1px solid var(--border); padding:10px 18px; border-radius:0;
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:.85rem; cursor:pointer; transition:all .2s;
-  }
-  .btn-secondary:hover { background:#eee; }
-  .btn-danger {
-    background:#f5f5f5; color:#d32f2f; border:1px solid #ffcdd2; padding:8px 14px; border-radius:0;
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:.8rem; cursor:pointer; transition:all .2s;
-  }
-  .btn-danger:hover { background:#ffebee; }
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:28px 20px; text-align:center; color:var(--muted); font-size:.73rem; letter-spacing:1px; background:var(--surface); }
+footer a { color:var(--crimson); text-decoration:none; }
 
-  /* PANEL */
-  #admin-panel {
-    display:none; position:fixed; inset:0; background:#fff; z-index:400; overflow-y:auto; flex-direction:column;
-  }
-  #admin-panel.open { display:flex; }
-  .admin-header {
-    background:#fff; border-bottom:1px solid var(--border); padding:20px 40px; height:auto;
-    display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10;
-  }
-  .admin-header .logo { font-size:1.4rem; }
-  .admin-title { font-size:.7rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-left:16px; font-weight:600; }
-  .admin-header-left { display:flex; align-items:center; }
-  .admin-header-right { display:flex; gap:10px; align-items:center; }
-  .admin-body { padding:40px; flex:1; }
+/* ── ADMIN ── */
+#admin-login-overlay {
+  display:none; position:fixed; inset:0; background:rgba(60,0,0,.78);
+  z-index:500; align-items:center; justify-content:center; padding:20px;
+}
+#admin-login-overlay.open { display:flex; }
+.login-box { background:#fff; padding:32px 28px; width:100%; max-width:330px; animation:slideUp .25s ease; }
+.login-box h2 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-style:italic; color:var(--deep); margin-bottom:4px; }
+.login-box p { font-size:.78rem; color:var(--muted); margin-bottom:20px; }
+.login-field { margin-bottom:12px; }
+.login-field label { display:block; font-size:.6rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; font-weight:500; }
+.login-field input { width:100%; border:1px solid var(--border); padding:10px 12px; font-family:'Jost',sans-serif; font-size:.9rem; outline:none; transition:border-color .2s; -webkit-appearance:none; border-radius:0; }
+.login-field input:focus { border-color:var(--crimson); }
+.login-error { color:var(--crimson); font-size:.76rem; margin-bottom:8px; display:none; }
+.btn-primary { width:100%; background:var(--deep); color:#fff; border:none; padding:12px; font-family:'Jost',sans-serif; font-weight:500; font-size:.82rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:background .2s; margin-top:4px; }
+.btn-primary:hover,.btn-primary:active { background:var(--crimson); }
+.btn-secondary { background:#f5f5f5; color:var(--text); border:1px solid var(--border); padding:8px 14px; font-family:'Jost',sans-serif; font-weight:500; font-size:.78rem; cursor:pointer; transition:all .2s; }
+.btn-secondary:hover { background:#eee; }
+.btn-danger { background:#fff0f0; color:#c00; border:1px solid #ffd0d0; padding:7px 12px; font-family:'Jost',sans-serif; font-weight:500; font-size:.74rem; cursor:pointer; transition:all .2s; }
+.btn-danger:hover { background:#ffebeb; }
 
-  .admin-stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-bottom:40px; }
-  .stat-card { background:#f8f8f8; border:1px solid var(--border); border-radius:0; padding:16px; }
-  .stat-label { font-size:.7rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; font-weight:600; }
-  .stat-value { font-size:2rem; letter-spacing:.5px; color:var(--text); font-weight:700; }
+#admin-panel { display:none; position:fixed; inset:0; background:var(--cream); z-index:400; overflow-y:auto; flex-direction:column; }
+#admin-panel.open { display:flex; }
+.admin-header { background:var(--deep); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
+.admin-header .logo { font-size:1.25rem; }
+.admin-label { font-size:.58rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); margin-left:10px; font-family:'Jost',sans-serif; }
+.admin-header-left { display:flex; align-items:center; }
+.admin-header-right { display:flex; gap:7px; }
+.admin-body { padding:20px 16px; flex:1; }
+.admin-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:24px; }
+.stat-card { background:#fff; border:1px solid var(--border); padding:12px; }
+.stat-label { font-size:.6rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:3px; font-weight:500; }
+.stat-value { font-family:'Cormorant Garamond',serif; font-size:1.9rem; color:var(--deep); font-weight:600; }
+.admin-section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+.admin-section-header h2 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--deep); font-style:italic; }
 
-  .admin-section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
-  .admin-section-header h2 { font-size:1.4rem; letter-spacing:1px; font-weight:700; }
+.product-form { background:#fff; border:1px solid var(--border); padding:18px; margin-bottom:20px; display:none; }
+.product-form.open { display:block; }
+.product-form h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--deep); font-style:italic; margin-bottom:14px; }
+.form-grid { display:grid; grid-template-columns:1fr; gap:11px; }
+.form-field { display:flex; flex-direction:column; gap:4px; }
+.form-field.full { grid-column:1/-1; }
+.form-field label { font-size:.6rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:500; }
+.form-field input,.form-field select,.form-field textarea {
+  border:1px solid var(--border); padding:9px 10px; font-family:'Jost',sans-serif;
+  font-size:.87rem; outline:none; transition:border-color .2s; background:#fff; resize:vertical;
+  -webkit-appearance:none; border-radius:0;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus { border-color:var(--crimson); }
+.form-field .hint { font-size:.62rem; color:var(--muted); line-height:1.4; }
+.form-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.img-preview { width:48px; height:48px; background:#f0e8e0; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.2rem; overflow:hidden; flex-shrink:0; }
+.img-preview img { width:100%; height:100%; object-fit:cover; }
+.img-row { display:flex; gap:9px; align-items:flex-start; }
+.img-row .form-field { flex:1; margin:0; }
 
-  /* FORM */
-  .product-form {
-    background:#f8f8f8; border:1px solid var(--border); border-radius:0;
-    padding:24px; margin-bottom:32px; display:none;
-  }
-  .product-form.open { display:block; }
-  .product-form h3 { font-size:1.2rem; letter-spacing:1px; margin-bottom:20px; color:var(--text); font-weight:700; }
-  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  .form-field { display:flex; flex-direction:column; gap:8px; }
+.admin-table-wrap { background:#fff; border:1px solid var(--border); overflow-x:auto; }
+.product-table { width:100%; border-collapse:collapse; min-width:400px; }
+.product-table th { text-align:left; padding:9px 11px; font-size:.6rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border); background:#faf5f0; font-weight:500; white-space:nowrap; }
+.product-table td { padding:9px 11px; border-bottom:1px solid var(--border); vertical-align:middle; font-size:.84rem; }
+.product-table tr:last-child td { border-bottom:none; }
+.product-table tr:hover td { background:#fdf9f5; }
+.table-thumb { width:34px; height:34px; background:#f0e8e0; display:flex; align-items:center; justify-content:center; font-size:1rem; overflow:hidden; flex-shrink:0; }
+.table-thumb img { width:100%; height:100%; object-fit:cover; }
+.table-name { font-weight:500; white-space:nowrap; }
+.table-cat { font-size:.65rem; color:var(--muted); margin-top:1px; }
+.table-price { font-family:'Cormorant Garamond',serif; font-size:.97rem; color:var(--deep); font-weight:600; white-space:nowrap; }
+.tbl-badge { font-size:.56rem; padding:3px 7px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; }
+.tbl-badge.new { background:var(--crimson); color:#fff; }
+.tbl-badge.hot { background:var(--deep); color:#fff; }
+.tbl-badge.none { color:var(--muted); }
+.table-actions { display:flex; gap:5px; }
+.btn-edit { background:#f5f5f5; color:var(--text); border:1px solid var(--border); padding:5px 9px; font-family:'Jost',sans-serif; font-weight:500; font-size:.7rem; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.btn-edit:hover { background:#eee; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%) translateY(20px);
+  z-index:999; background:#fff; border-left:3px solid var(--crimson); padding:10px 16px;
+  display:flex; align-items:center; gap:8px; font-size:.8rem; font-weight:500;
+  box-shadow:0 4px 16px rgba(0,0,0,.14); opacity:0; transition:all .3s; pointer-events:none; white-space:nowrap;
+}
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.toast.success { border-color:#2e7d32; }
+.toast.error { border-color:var(--crimson); }
+
+/* ── DESKTOP ── */
+@media(min-width:600px){
+  header { padding:18px 48px; }
+  .controls { padding:22px 48px; }
+  .controls .filters { width:auto; }
+  .results-bar { padding:12px 48px; }
+  .grid { padding:36px 48px; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:28px; }
+  .card-img { font-size:5rem; }
+  .card-img .ep { font-size:5rem; }
+  .modal-overlay { align-items:center; padding:24px; }
+  .modal-gallery { aspect-ratio:4/3; }
+  .modal-name { font-size:2rem; }
+  .modal-body { padding:26px 30px 34px; }
+  footer { padding:34px 48px; }
+  .admin-body { padding:28px 32px; }
+  .admin-stats { grid-template-columns:repeat(4,1fr); }
+  .form-grid { grid-template-columns:1fr 1fr; }
   .form-field.full { grid-column:1/-1; }
-  .form-field label { font-size:.7rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; font-weight:600; }
-  .form-field input,.form-field select,.form-field textarea {
-    background:#fff; border:1px solid var(--border); border-radius:0;
-    padding:10px 12px; color:var(--text); font-family:'Archivo',sans-serif; font-size:.9rem; outline:none; transition:border-color .2s; resize:vertical;
-  }
-  .form-field input:focus,.form-field select:focus,.form-field textarea:focus { border-color:var(--text); }
-  .form-field select option { background:#fff; }
-  .form-actions { display:flex; gap:12px; margin-top:16px; }
-  .img-preview {
-    width:60px; height:60px; background:#f0f0f0; border:1px solid var(--border);
-    border-radius:0; display:flex; align-items:center; justify-content:center; font-size:1.5rem; overflow:hidden; flex-shrink:0;
-  }
-  .img-preview img { width:100%; height:100%; object-fit:cover; }
-  .img-row { display:flex; gap:12px; align-items:center; }
-  .img-row .form-field { flex:1; margin:0; }
-
-  /* TABLE */
-  .admin-table-wrap { background:#fff; border:1px solid var(--border); border-radius:0; overflow:hidden; }
-  .product-table { width:100%; border-collapse:collapse; }
-  .product-table th {
-    text-align:left; padding:12px 14px; font-size:.7rem; color:var(--muted);
-    letter-spacing:1px; text-transform:uppercase; border-bottom:1px solid var(--border); font-weight:600; background:#f8f8f8;
-  }
-  .product-table td { padding:12px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
-  .product-table tr:last-child td { border-bottom:none; }
-  .product-table tr:hover td { background:#f8f8f8; }
-  .table-thumb {
-    width:40px; height:40px; background:#f0f0f0; border-radius:0;
-    display:flex; align-items:center; justify-content:center; font-size:1.3rem; overflow:hidden;
-  }
-  .table-thumb img { width:100%; height:100%; object-fit:cover; }
-  .table-name { font-weight:600; font-size:.9rem; }
-  .table-cat { font-size:.7rem; color:var(--muted); margin-top:2px; }
-  .table-price { font-size:1rem; color:var(--text); font-weight:700; }
-  .table-badge { font-size:.65rem; padding:4px 8px; border-radius:0; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
-  .table-badge.new { background:#000; color:#fff; }
-  .table-badge.hot { background:#d32f2f; color:#fff; }
-  .table-badge.none { color:var(--muted); }
-  .table-actions { display:flex; gap:6px; }
-  .btn-edit {
-    background:#f5f5f5; color:var(--text); border:1px solid var(--border);
-    padding:6px 12px; border-radius:0; font-family:'Archivo',sans-serif; font-weight:600; font-size:.75rem; cursor:pointer; transition:all .15s;
-  }
-  .btn-edit:hover { background:#eee; }
-
-  /* TOAST */
-  .toast {
-    position:fixed; bottom:30px; right:30px; z-index:999;
-    background:#fff; border:1px solid var(--border); border-radius:0; padding:14px 20px;
-    display:flex; align-items:center; gap:10px; font-size:.85rem; font-weight:600;
-    box-shadow:0 4px 12px rgba(0,0,0,.12); transform:translateY(20px); opacity:0; transition:all .3s; pointer-events:none;
-  }
-  .toast.show { transform:translateY(0); opacity:1; }
-  .toast.success { border-color:#4caf50; }
-  .toast.error { border-color:#d32f2f; }
-  .toast-icon { font-size:1rem; }
-
-  @media(max-width:700px){
-    header,.admin-header{padding:16px 20px;}
-    .hero{padding:60px 20px;}
-    .controls{padding:20px; flex-direction:column;}
-    .search-wrap{max-width:100%;}
-    .filters{justify-content:flex-start;}
-    .results-info,.grid{padding:20px;}
-    .grid{gap:16px; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
-    footer{padding:40px 20px;}
-    .admin-body{padding:20px;}
-    .form-grid{grid-template-columns:1fr;}
-    .form-field.full{grid-column:1;}
-    .admin-stats{grid-template-columns:1fr;}
-    .product-table th:nth-child(4),.product-table td:nth-child(4){display:none;}
-  }
+  .toast { left:auto; right:22px; transform:translateY(20px); bottom:22px; }
+  .toast.show { transform:translateY(0); }
+}
 </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
-<div id="splash-screen">
-  <div class="splash-logo">WestClothes</div>
-  <div class="splash-subtitle">Premium Streetwear</div>
+<div id="splash">
+  <div class="splash-brand">khikmatillaev's</div>
   <div class="splash-line"></div>
-  <div class="splash-dots">
-    <div class="splash-dot"></div>
-    <div class="splash-dot"></div>
-    <div class="splash-dot"></div>
-  </div>
 </div>
 
-<!-- SHOP -->
 <header>
-  <a class="logo" href="#">WestClothes</a>
-  <div class="header-right">
-  </div>
+  <a class="logo" href="#">khikmatillaev's</a>
 </header>
 
 <section class="hero">
-  <h1>WEST<span>CLOTHES</span></h1>
-  <p>Премиум одежда для твоего стиля</p>
+  <div class="hero-title"><span>khikmatillaev's</span></div>
+  <div class="hero-sub">Эксклюзивная одежда · Ташкент</div>
 </section>
 
 <div class="controls">
   <div class="search-wrap">
-    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input class="search-input" id="search" type="text" placeholder="Поиск товаров..." oninput="renderProducts()">
+    <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-input" id="search" type="text" placeholder="Поиск..." oninput="renderProducts()">
   </div>
   <div class="filters" id="filters"></div>
 </div>
 
-<div class="results-info" id="results-info"></div>
+<div class="results-bar" id="results-bar"></div>
 <div class="grid" id="grid"></div>
 
 <footer>
-  <p>© 2025 WestClothes — Свяжитесь с нами в <a href="https://t.me/admin" target="_blank">Telegram</a></p>
+  <p>© 2025 khikmatillaev's — <a href="https://t.me/data_n0thing" target="_blank">@data_n0thing</a></p>
 </footer>
 
 <!-- PRODUCT MODAL -->
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal-wrap">
-    <div class="modal" id="modal-box">
-      <button class="modal-close" onclick="closeModalBtn()">✕</button>
-      <div class="modal-img" id="modal-img"></div>
-      <div class="modal-body">
-        <div class="modal-cat" id="modal-cat"></div>
-        <div class="modal-name" id="modal-name"></div>
-        <div class="modal-desc" id="modal-desc"></div>
-        <div class="modal-sizes">
-          <label>Выберите размер</label>
-          <div class="size-btns" id="size-btns"></div>
-        </div>
-        <div class="modal-footer">
-          <div class="modal-price" id="modal-price"></div>
-          <button class="modal-order-btn" onclick="orderProduct()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-6.5 9a.75.75 0 01-1.18.072l-3-3.5a.75.75 0 011.136-.972l2.41 2.81 5.957-8.237a.75.75 0 011.177.827z"/>
-            </svg>
-            Заказать в Telegram
-          </button>
-        </div>
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-gallery" id="modal-gallery">
+      <div class="gallery-track" id="gallery-track"></div>
+      <button class="g-arrow prev" id="g-prev" onclick="galleryNav(-1)">&#8249;</button>
+      <button class="g-arrow next" id="g-next" onclick="galleryNav(1)">&#8250;</button>
+      <div class="g-dots" id="g-dots"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-sizes">
+        <label>Выберите размер</label>
+        <div class="size-btns" id="size-btns"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-price" id="modal-price"></div>
+        <button class="modal-order-btn" onclick="orderProduct()">Заказать в Telegram</button>
       </div>
     </div>
   </div>
@@ -438,8 +363,8 @@
 <!-- ADMIN LOGIN -->
 <div id="admin-login-overlay">
   <div class="login-box">
-    <h2>АДМИН</h2>
-    <p>Введите пароль для доступа к панели управления</p>
+    <h2>Вход</h2>
+    <p>Панель управления khikmatillaev's</p>
     <div class="login-field">
       <label>Пароль</label>
       <input type="password" id="admin-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
@@ -455,25 +380,25 @@
 <div id="admin-panel">
   <div class="admin-header">
     <div class="admin-header-left">
-      <span class="logo">WestClothes</span>
-      <span class="admin-title">/ Управление товарами</span>
+      <span class="logo">khikmatillaev's</span>
+      <span class="admin-label">/ Товары</span>
     </div>
     <div class="admin-header-right">
-      <button class="btn-secondary" onclick="closeAdmin()">← На сайт</button>
+      <button class="btn-secondary" onclick="closeAdmin()">← Сайт</button>
       <button class="btn-danger" onclick="adminLogout()">Выйти</button>
     </div>
   </div>
   <div class="admin-body">
     <div class="admin-stats">
-      <div class="stat-card"><div class="stat-label">Всего товаров</div><div class="stat-value" id="stat-total">0</div></div>
+      <div class="stat-card"><div class="stat-label">Товаров</div><div class="stat-value" id="stat-total">0</div></div>
       <div class="stat-card"><div class="stat-label">Категорий</div><div class="stat-value" id="stat-cats">0</div></div>
       <div class="stat-card"><div class="stat-label">Новинок</div><div class="stat-value" id="stat-new">0</div></div>
       <div class="stat-card"><div class="stat-label">Хитов</div><div class="stat-value" id="stat-hot">0</div></div>
     </div>
 
     <div class="admin-section-header">
-      <h2>Товары</h2>
-      <button class="btn-primary" style="width:auto;padding:10px 22px;" onclick="toggleForm()">+ Добавить товар</button>
+      <h2>Каталог</h2>
+      <button class="btn-primary" style="width:auto;padding:10px 18px;" onclick="toggleForm()">+ Добавить товар</button>
     </div>
 
     <div class="product-form" id="product-form">
@@ -482,16 +407,16 @@
       <div class="form-grid">
         <div class="form-field">
           <label>Название *</label>
-          <input type="text" id="f-name" placeholder="Белая классика">
+          <input type="text" id="f-name" placeholder="Название товара">
         </div>
         <div class="form-field">
           <label>Категория *</label>
-          <input type="text" id="f-cat" placeholder="Базовые" list="cat-list">
+          <input type="text" id="f-cat" placeholder="Например: Базовые" list="cat-list">
           <datalist id="cat-list"></datalist>
         </div>
         <div class="form-field">
           <label>Цена (сум) *</label>
-          <input type="number" id="f-price" placeholder="990">
+          <input type="number" id="f-price" placeholder="990000">
         </div>
         <div class="form-field">
           <label>Значок</label>
@@ -503,20 +428,21 @@
         </div>
         <div class="form-field full">
           <label>Описание *</label>
-          <textarea id="f-desc" rows="2" placeholder="Краткое описание товара..."></textarea>
+          <textarea id="f-desc" rows="2" placeholder="Краткое описание..."></textarea>
         </div>
         <div class="form-field full">
-          <label>Фото — эмодзи или ссылка на картинку</label>
+          <label>Фото (через запятую — эмодзи или URL)</label>
           <div class="img-row">
             <div class="img-preview" id="img-preview">👕</div>
-            <div class="form-field">
-              <input type="text" id="f-img" placeholder="👕  или  https://example.com/photo.jpg" oninput="previewImg(this.value)">
+            <div class="form-field" style="gap:6px">
+              <input type="text" id="f-img" placeholder="👕  или  https://…/фото1.jpg, https://…/фото2.jpg" oninput="previewImg(this.value)">
+              <span class="hint">Первое фото — обложка. Для галереи разделяйте запятой.</span>
             </div>
           </div>
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn-primary" style="width:auto;padding:12px 28px;" onclick="saveProduct()">💾 Сохранить</button>
+        <button class="btn-primary" style="width:auto;padding:11px 22px;" onclick="saveProduct()">Сохранить</button>
         <button class="btn-secondary" onclick="cancelForm()">Отмена</button>
       </div>
     </div>
@@ -524,13 +450,7 @@
     <div class="admin-table-wrap">
       <table class="product-table">
         <thead>
-          <tr>
-            <th>Фото</th>
-            <th>Товар</th>
-            <th>Цена</th>
-            <th>Метка</th>
-            <th>Действия</th>
-          </tr>
+          <tr><th>Фото</th><th>Товар</th><th>Цена</th><th>Метка</th><th>Действия</th></tr>
         </thead>
         <tbody id="admin-table-body"></tbody>
       </table>
@@ -538,168 +458,183 @@
   </div>
 </div>
 
-<div class="toast" id="toast">
-  <span class="toast-icon" id="toast-icon"></span>
-  <span id="toast-msg"></span>
-</div>
+<div class="toast" id="toast"><span id="toast-icon"></span><span id="toast-msg"></span></div>
 
 <script>
-const TG_USERNAME = 'data_n0thing';      // ← замените на свой ник в Telegram (без @)
-const ADMIN_PASS  = 'urban2025';  // ← пароль для входа в админку
-const STORAGE_KEY = 'urban_products';
+const TG = 'data_n0thing';
+const ADMIN_PASS = 'urban2025';
+const DB_KEY = 'khikmatillaevs_v2';
 const SIZES = ['XS','S','M','L','XL','XXL'];
 
-const DEFAULT_PRODUCTS = [
-  {id:1, name:'Белая классика',    cat:'Базовые', price:890,  img:['👕','🤍'], desc:'Классическая белая футболка из 100% хлопка. Плотность 180 г/м².', badge:null},
-  {id:2, name:'Чёрный минимализм', cat:'Базовые', price:890,  img:['🖤','⬛'], desc:'Базовая чёрная футболка — must-have любого гардероба.', badge:null},
-  {id:3, name:'Серая меланж',      cat:'Базовые', price:950,  img:['🩶','🌫️'], desc:'Мягкий меланж, премиальный крой. Подходит на каждый день.', badge:null},
-  {id:4, name:'Оверсайз белый',    cat:'Базовые', price:1050, img:['🤍','👕'], desc:'Широкий крой, удлинённый силуэт. Свободная посадка.', badge:'new'},
-  {id:5, name:'Оверсайз чёрный',   cat:'Базовые', price:1050, img:['🖤','⬛'], desc:'Оверсайз чёрный — универсальная база для любого образа.', badge:null},
-  {id:6, name:'Navy синий',        cat:'Базовые', price:890,  img:['💙','🌊'], desc:'Насыщенный тёмно-синий цвет. Плотный хлопок.', badge:null},
-  {id:7, name:'Хаки',              cat:'Базовые', price:890,  img:['🫙','🏜️'], desc:'Земляной оттенок хаки. Хорошо сочетается с джинсами.', badge:null},
-  {id:8, name:'Кремовый',          cat:'Базовые', price:920,  img:['🤍','🍦'], desc:'Мягкий кремовый тон — нейтральная база на каждый день.', badge:null},
-  {id:9, name:'Urban Camo',        cat:'Принты',  price:1290, img:['🌿','🎨'], desc:'Городской камуфляж — геометричный принт в нейтральных тонах.', badge:'new'},
-  {id:10,name:'Acid Splash',       cat:'Принты',  price:1390, img:['🎨','💥'], desc:'Яркий кислотный принт. Смелый и запоминающийся.', badge:null},
-  {id:11,name:'Street Typo',       cat:'Принты',  price:1190, img:['🔤','✍️'], desc:'Типографика в уличном стиле. Крупный шрифтовой принт.', badge:null},
-  {id:12,name:'Glitch Vision',     cat:'Принты',  price:1350, img:['⚡','🔥'], desc:'Глитч-эффект и цифровые помехи на чёрном фоне.', badge:null},
-  {id:13,name:'Neon Skyline',      cat:'Принты',  price:1450, img:['🌆','🏙️'], desc:'Силуэт ночного города в неоновых тонах.', badge:'new'},
-  {id:14,name:'Botanical',         cat:'Принты',  price:1290, img:['🌱','🌿'], desc:'Минималистичный ботанический принт. Спокойная эстетика.', badge:null},
-  {id:15,name:'Retro Wave',        cat:'Принты',  price:1390, img:['🌊','🏄'], desc:'Ретро-волна 80-х: градиент, сетки, хром.', badge:null},
-  {id:16,name:'Abstract Brush',    cat:'Принты',  price:1290, img:['🖌️','🎭'], desc:'Абстрактные мазки кисти, ручная работа художника.', badge:null},
-  {id:17,name:'Pixel Art',         cat:'Принты',  price:1190, img:['👾','🎮'], desc:'Пиксельная графика в стиле ретро-игр.', badge:null},
-  {id:18,name:'Geometric Bold',    cat:'Принты',  price:1250, img:['🔷','🔹'], desc:'Смелые геометрические фигуры. Контрастный принт.', badge:null},
-  {id:19,name:'WestClothes × Граффити',  cat:'Коллабы', price:1790, img:['✏️','🎨'], desc:'Эксклюзивный коллаб с уличным художником. Лимит 50 шт.', badge:'hot'},
-  {id:20,name:'WestClothes × Музыка',    cat:'Коллабы', price:1690, img:['🎵','🎶'], desc:'Коллаборация с местной музыкальной сценой.', badge:null},
-  {id:21,name:'WestClothes × Фото',      cat:'Коллабы', price:1590, img:['📷','📸'], desc:'Принт работы молодого фотографа из Ташкента.', badge:'new'},
-  {id:22,name:'Midnight Drop #1',  cat:'Лимитед', price:2190, img:['🌑','⭐'], desc:'Первый лимитированный выпуск. Номерная серия, 30 штук.', badge:'hot'},
-  {id:23,name:'Midnight Drop #2',  cat:'Лимитед', price:2190, img:['🌒','✨'], desc:'Второй выпуск серии Midnight. Матовый принт.', badge:'hot'},
-  {id:24,name:'Golden Hour',       cat:'Лимитед', price:1990, img:['🌅','☀️'], desc:'Золотые переливы заката. Металлизированный принт.', badge:null},
-  {id:25,name:'Dry Fit Белый',     cat:'Спорт',   price:1150, img:['🏃','👕'], desc:'Технологичная ткань, быстро сохнет, отводит влагу.', badge:null},
-  {id:26,name:'Dry Fit Чёрный',    cat:'Спорт',   price:1150, img:['🏋️','⚫'], desc:'Чёрный Dry Fit — для тренировок и активного отдыха.', badge:null},
-  {id:27,name:'Компрессионный',    cat:'Спорт',   price:1350, img:['💪','🔥'], desc:'Компрессионная посадка, поддерживает мышцы при нагрузках.', badge:null},
-];
+function dbLoad(){ try{ const r=localStorage.getItem(DB_KEY); return r?JSON.parse(r):[]; }catch{ return[]; } }
+function dbSave(d){ localStorage.setItem(DB_KEY,JSON.stringify(d)); }
 
-function loadProducts(){try{const s=localStorage.getItem(STORAGE_KEY);return s?JSON.parse(s):[...DEFAULT_PRODUCTS];}catch{return[...DEFAULT_PRODUCTS];}}
-function saveProducts(){localStorage.setItem(STORAGE_KEY,JSON.stringify(products));}
+let products = dbLoad();
+let activeFilter = 'Все';
+let selectedSize = '';
+let currentProduct = null;
+let adminLoggedIn = false;
+let nextId = products.length ? Math.max(...products.map(p=>p.id))+1 : 1;
 
-let products=loadProducts();
-let activeFilter='Все',selectedSize='',currentProduct=null,adminLoggedIn=false;
+// ── UTILS ──
+function parseImgs(raw){
+  if(!raw) return['👕'];
+  if(Array.isArray(raw)) return raw.length?raw:['👕'];
+  const arr = raw.split(',').map(s=>s.trim()).filter(Boolean);
+  return arr.length?arr:['👕'];
+}
+function firstImg(raw){ return parseImgs(raw)[0]; }
+function isUrl(s){ return s&&(s.startsWith('http')||s.startsWith('/')); }
 
-function getCategories(){return['Все',...new Set(products.map(p=>p.cat))];}
-
+// ── FILTERS ──
+function getCategories(){ return['Все',...new Set(products.map(p=>p.cat))]; }
 function buildFilters(){
   const cats=getCategories();
-  if(!cats.includes(activeFilter))activeFilter='Все';
+  if(!cats.includes(activeFilter)) activeFilter='Все';
   document.getElementById('filters').innerHTML=cats.map(c=>
     `<button class="filter-btn ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>`
   ).join('');
 }
-function setFilter(cat){activeFilter=cat;buildFilters();renderProducts();}
+function setFilter(cat){ activeFilter=cat; buildFilters(); renderProducts(); }
 
-function imgContent(img){
-  if(!img)return'👕';
-  // если это массив - берем первый элемент
-  const firstImg = Array.isArray(img) ? img[0] : img;
-  if(firstImg.startsWith('http')||firstImg.startsWith('/'))
-    return`<img src="${firstImg}" alt="" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','👕')">`;
-  return firstImg;
+// ── CARD CAROUSEL ──
+const carouselMap = new Map(); // cardImgEl → intervalId
+
+function startCarousel(el, id){
+  if(carouselMap.has(el)) return;
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const imgs = parseImgs(p.img);
+  if(imgs.length<2) return;
+  let idx=0;
+  const dotsEl = el.querySelector('.img-dots');
+
+  function showIdx(i){
+    idx=(i+imgs.length)%imgs.length;
+    const src=imgs[idx];
+    // remove old media
+    el.querySelectorAll('img,.ep').forEach(n=>n.remove());
+    if(isUrl(src)){
+      const img=document.createElement('img');
+      img.src=src; img.alt='';
+      img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      img.onerror=()=>{ img.remove(); const sp=document.createElement('span'); sp.className='ep'; sp.textContent='👕'; el.insertBefore(sp, el.querySelector('.badge,.img-dots')); };
+      el.insertBefore(img, el.querySelector('.badge,.img-dots'));
+    } else {
+      const sp=document.createElement('span'); sp.className='ep'; sp.textContent=src;
+      el.insertBefore(sp, el.querySelector('.badge,.img-dots'));
+    }
+    if(dotsEl) dotsEl.querySelectorAll('.img-dot').forEach((d,j)=>d.classList.toggle('active',j===idx));
+  }
+
+  const timer=setInterval(()=>showIdx(idx+1),1800);
+  carouselMap.set(el,timer);
 }
 
+function stopCarousel(el, id){
+  const timer=carouselMap.get(el);
+  if(!timer) return;
+  clearInterval(timer);
+  carouselMap.delete(el);
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
+  const src=firstImg(p.img);
+  el.querySelectorAll('img,.ep').forEach(n=>n.remove());
+  if(isUrl(src)){
+    const img=document.createElement('img');
+    img.src=src; img.alt='';
+    img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    el.insertBefore(img, el.querySelector('.badge,.img-dots'));
+  } else {
+    const sp=document.createElement('span'); sp.className='ep'; sp.textContent=src;
+    el.insertBefore(sp, el.querySelector('.badge,.img-dots'));
+  }
+  const dotsEl=el.querySelector('.img-dots');
+  if(dotsEl) dotsEl.querySelectorAll('.img-dot').forEach((d,j)=>d.classList.toggle('active',j===0));
+}
+
+// ── RENDER ──
 function renderProducts(){
   const q=document.getElementById('search').value.toLowerCase().trim();
   const filtered=products.filter(p=>{
     const mc=activeFilter==='Все'||p.cat===activeFilter;
-    const mq=!q||p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q);
+    const mq=!q||p.name.toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q);
     return mc&&mq;
   });
-  document.getElementById('results-info').textContent=`Показано товаров: ${filtered.length}`;
+  document.getElementById('results-bar').textContent=`Показано товаров: ${filtered.length}`;
   const grid=document.getElementById('grid');
-  if(!filtered.length){
-    grid.innerHTML=`<div class="no-results"><div class="icon">🔍</div><p>Товаров не найдено. Попробуйте другой запрос.</p></div>`;
-    return;
-  }
-  grid.innerHTML=filtered.map((p,i)=>`
-    <div class="card" style="animation-delay:${i*.04}s" onclick="openModal(${p.id})">
-      <div class="card-img" onmouseenter="cycleImages(this, ${p.id})" onmouseleave="stopCycleImages(this)">
-        ${imgContent(p.img)}
-        ${p.badge?`<span class="badge ${p.badge==='new'?'new':''}">${p.badge==='new'?'Новинка':'🔥 Хит'}</span>`:''}
+  if(!filtered.length){ grid.innerHTML=`<div class="no-results"><p>Товаров не найдено.</p></div>`; return; }
+
+  grid.innerHTML=filtered.map((p,i)=>{
+    const imgs=parseImgs(p.img);
+    const src=imgs[0];
+    const imgTag=isUrl(src)
+      ?`<img src="${src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.remove()">`
+      :`<span class="ep">${src}</span>`;
+    const dots=imgs.length>1
+      ?`<div class="img-dots">${imgs.map((_,di)=>`<div class="img-dot${di===0?' active':''}"></div>`).join('')}</div>`
+      :'';
+    const badge=p.badge?`<span class="badge${p.badge==='hot'?' hot':''}">${p.badge==='new'?'Новинка':'🔥 Хит'}</span>`:'';
+    return`<div class="card" style="animation-delay:${i*.04}s" onclick="openModal(${p.id})">
+      <div class="card-img" data-id="${p.id}"
+        onmouseenter="startCarousel(this,${p.id})"
+        onmouseleave="stopCarousel(this,${p.id})">
+        ${imgTag}${badge}${dots}
       </div>
       <div class="card-body">
         <div class="card-cat">${p.cat}</div>
         <div class="card-name">${p.name}</div>
-        <div class="card-desc">${p.desc}</div>
+        <div class="card-desc">${p.desc||''}</div>
         <div class="card-footer">
           <div class="card-price">${p.price.toLocaleString('ru')} <span>сум</span></div>
-          <button class="order-btn" onclick="event.stopPropagation();openModal(${p.id})">
-  Заказать
-</button>
+          <button class="order-btn" onclick="event.stopPropagation();openModal(${p.id})">Заказать</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-// CAROUSEL IMAGE CYCLING
-const imageCarousels = new Map(); // Отслеживание таймеров для каждой карточки
+// ── MODAL GALLERY ──
+let gImgs=[], gIdx=0;
 
-function cycleImages(cardImgEl, productId) {
-  // Если уже запущена карусель для этого элемента, не стартуем вторую
-  if (imageCarousels.has(cardImgEl)) return;
-  
-  const product = products.find(p => p.id === productId);
-  if (!product || !Array.isArray(product.img) || product.img.length < 2) return;
-  
-  let currentIndex = 0;
-  
-  const interval = setInterval(() => {
-    currentIndex = (currentIndex + 1) % product.img.length;
-    const img = product.img[currentIndex];
-    
-    // Обновляем содержимое без badge
-    if (img.startsWith('http') || img.startsWith('/')) {
-      cardImgEl.innerHTML = `<img src="${img}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','👕')">`;
-    } else {
-      cardImgEl.innerHTML = img;
-    }
-  }, 2000); // 2 секунды
-  
-  imageCarousels.set(cardImgEl, interval);
+function gShow(idx){
+  gIdx=(idx+gImgs.length)%gImgs.length;
+  document.getElementById('gallery-track').style.transform=`translateX(-${gIdx*100}%)`;
+  document.querySelectorAll('.g-dot').forEach((d,i)=>d.classList.toggle('active',i===gIdx));
 }
+function galleryNav(dir){ gShow(gIdx+dir); }
 
-function stopCycleImages(cardImgEl) {
-  const interval = imageCarousels.get(cardImgEl);
-  if (interval) {
-    clearInterval(interval);
-    imageCarousels.delete(cardImgEl);
-    
-    // Вернуть первое фото и badge
-    const card = cardImgEl.closest('.card');
-    if (card) {
-      const productId = Array.from(card.parentNode.querySelectorAll('.card')).indexOf(card);
-      const filtered = products.filter(p => {
-        const mc = activeFilter === 'Все' || p.cat === activeFilter;
-        const q = document.getElementById('search').value.toLowerCase().trim();
-        const mq = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
-        return mc && mq;
-      });
-      
-      if (productId >= 0 && productId < filtered.length) {
-        const product = filtered[productId];
-        cardImgEl.innerHTML = imgContent(product.img) + 
-          (product.badge ? `<span class="badge ${product.badge === 'new' ? 'new' : ''}">${product.badge === 'new' ? 'Новинка' : '🔥 Хит'}</span>` : '');
-      }
-    }
-  }
-}
+// touch swipe
+let touchX=0;
+document.getElementById('modal-gallery').addEventListener('touchstart',e=>{touchX=e.touches[0].clientX;},{passive:true});
+document.getElementById('modal-gallery').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-touchX;
+  if(Math.abs(dx)>40) galleryNav(dx<0?1:-1);
+},{passive:true});
 
 function openModal(id){
   currentProduct=products.find(p=>p.id===id);
-  if(!currentProduct)return;
+  if(!currentProduct) return;
   selectedSize='';
   const p=currentProduct;
-  document.getElementById('modal-img').innerHTML=imgContent(p.img)+(p.badge?`<span class="badge ${p.badge==='new'?'new':''}">${p.badge==='new'?'Новинка':'🔥 Хит'}</span>`:'');
+  gImgs=parseImgs(p.img); gIdx=0;
+
+  const track=document.getElementById('gallery-track');
+  track.style.transition='none';
+  track.style.transform='translateX(0)';
+  track.innerHTML=gImgs.map(src=>{
+    const inner=isUrl(src)?`<img src="${src}" alt="" style="width:100%;height:100%;object-fit:cover;">`:`${src}`;
+    return`<div class="gallery-slide">${inner}</div>`;
+  }).join('');
+  document.getElementById('g-dots').innerHTML=gImgs.map((_,i)=>`<div class="g-dot${i===0?' active':''}" onclick="gShow(${i})"></div>`).join('');
+  const showArrows=gImgs.length>1;
+  document.getElementById('g-prev').style.display=showArrows?'flex':'none';
+  document.getElementById('g-next').style.display=showArrows?'flex':'none';
+  requestAnimationFrame(()=>{ track.style.transition=''; });
+
   document.getElementById('modal-cat').textContent=p.cat;
   document.getElementById('modal-name').textContent=p.name;
-  document.getElementById('modal-desc').textContent=p.desc;
+  document.getElementById('modal-desc').textContent=p.desc||'';
   document.getElementById('modal-price').textContent=p.price.toLocaleString('ru')+' сум';
   document.getElementById('size-btns').innerHTML=SIZES.map(s=>`<button class="size-btn" onclick="selectSize('${s}',this)">${s}</button>`).join('');
   document.getElementById('modal').classList.add('open');
@@ -710,73 +645,42 @@ function selectSize(size,el){
   document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
   el.classList.add('selected');
 }
-function closeModal(e){if(e.target===document.getElementById('modal'))closeModalBtn();}
-function closeModalBtn(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
-
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
 function orderProduct(){
   if(!currentProduct) return;
-
-  const s = selectedSize ? ` | Размер: ${selectedSize}` : '';
-  const msg = encodeURIComponent(
-`Привет! Хочу заказать:
-
-👕 ${currentProduct.name}${s}
-💰 Цена: ${currentProduct.price.toLocaleString('ru')} сум`
-  );
-
-  // Открывает TELEGRAM APP
-  window.location.href = `tg://resolve?domain=${TG_USERNAME}&text=${msg}`;
-
-  closeModalBtn();
+  const s=selectedSize?` | Размер: ${selectedSize}`:'';
+  const msg=encodeURIComponent(`Привет! Хочу заказать:\n\n👕 ${currentProduct.name}${s}\n💰 Цена: ${currentProduct.price.toLocaleString('ru')} сум`);
+  window.location.href=`tg://resolve?domain=${TG}&text=${msg}`;
+  setTimeout(()=>window.open(`https://t.me/${TG}?text=${msg}`,'_blank'),1000);
+  closeModal();
 }
 
-function quickOrder(id){
-  const p = products.find(x => x.id === id);
-  if(!p) return;
-
-  const msg = encodeURIComponent(
-`Привет! Хочу заказать:
-
-👕 ${p.name}
-💰 Цена: ${p.price.toLocaleString('ru')} сум`
-  );
-
-  // Открывает TELEGRAM APP
-  window.location.href = `tg://resolve?domain=${TG_USERNAME}&text=${msg}`;
-}
-
-function openTelegram(msg){
-  const tgUrl = `tg://resolve?domain=${TG_USERNAME}&text=${msg}`;
-  const webUrl = `https://t.me/${TG_USERNAME}?text=${msg}`;
-
-  window.location.href = tgUrl;
-
-  setTimeout(() => {
-    window.open(webUrl, '_blank');
-  }, 1200);
-}
-
-// ADMIN AUTH
+// ── ADMIN ──
 function openAdminLogin(){
-  if(adminLoggedIn){openAdmin();return;}
+  if(adminLoggedIn){ openAdmin(); return; }
   document.getElementById('admin-login-overlay').classList.add('open');
   document.getElementById('admin-password').value='';
   document.getElementById('login-error').style.display='none';
-  setTimeout(()=>document.getElementById('admin-password').focus(),100);
+  setTimeout(()=>document.getElementById('admin-password').focus(),150);
 }
-function closeAdminLogin(){document.getElementById('admin-login-overlay').classList.remove('open');}
+function closeAdminLogin(){
+  document.getElementById('admin-login-overlay').classList.remove('open');
+  history.replaceState(null,'',location.pathname.replace('/admin','/')||'/');
+}
 function adminLogin(){
   if(document.getElementById('admin-password').value===ADMIN_PASS){
-    adminLoggedIn=true;closeAdminLogin();openAdmin();
-  }else{
+    adminLoggedIn=true; closeAdminLogin(); openAdmin();
+  } else {
     document.getElementById('login-error').style.display='block';
     document.getElementById('admin-password').value='';
     document.getElementById('admin-password').focus();
   }
 }
-function adminLogout(){adminLoggedIn=false;closeAdmin();showToast('Вы вышли из админки','success');}
+function adminLogout(){ adminLoggedIn=false; closeAdmin(); showToast('Вы вышли','success'); }
 
-// ADMIN PANEL
 function openAdmin(){
   document.getElementById('admin-panel').classList.add('open');
   document.body.style.overflow='hidden';
@@ -791,30 +695,26 @@ function refreshAdmin(){
   document.getElementById('stat-cats').textContent=new Set(products.map(p=>p.cat)).size;
   document.getElementById('stat-new').textContent=products.filter(p=>p.badge==='new').length;
   document.getElementById('stat-hot').textContent=products.filter(p=>p.badge==='hot').length;
-  const cats=[...new Set(products.map(p=>p.cat))];
-  document.getElementById('cat-list').innerHTML=cats.map(c=>`<option value="${c}">`).join('');
+  document.getElementById('cat-list').innerHTML=[...new Set(products.map(p=>p.cat))].map(c=>`<option value="${c}">`).join('');
   const tbody=document.getElementById('admin-table-body');
-  if(!products.length){
-    tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted)">Товаров пока нет</td></tr>`;
-    return;
-  }
-  tbody.innerHTML=products.map(p=>`
-    <tr>
-      <td><div class="table-thumb">${imgContent(p.img)}</div></td>
+  if(!products.length){ tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted)">Нет товаров. Добавьте первый.</td></tr>`; return; }
+  tbody.innerHTML=products.map(p=>{
+    const src=firstImg(p.img);
+    const thumb=isUrl(src)?`<img src="${src}" style="width:100%;height:100%;object-fit:cover;">`:`${src}`;
+    return`<tr>
+      <td><div class="table-thumb">${thumb}</div></td>
       <td><div class="table-name">${p.name}</div><div class="table-cat">${p.cat}</div></td>
       <td><div class="table-price">${p.price.toLocaleString('ru')}</div></td>
-      <td>${p.badge==='new'?`<span class="table-badge new">Новинка</span>`:p.badge==='hot'?`<span class="table-badge hot">🔥 Хит</span>`:`<span class="table-badge none">—</span>`}</td>
+      <td>${p.badge==='new'?`<span class="tbl-badge new">Новинка</span>`:p.badge==='hot'?`<span class="tbl-badge hot">🔥 Хит</span>`:`<span class="tbl-badge none">—</span>`}</td>
       <td><div class="table-actions">
-        <button class="btn-edit" onclick="editProduct(${p.id})">✏️ Изменить</button>
-        <button class="btn-danger" onclick="deleteProduct(${p.id})">🗑 Удалить</button>
+        <button class="btn-edit" onclick="editProduct(${p.id})">✏ Изменить</button>
+        <button class="btn-danger" onclick="deleteProduct(${p.id})">✕ Удалить</button>
       </div></td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
-function toggleForm(){
-  const f=document.getElementById('product-form');
-  f.classList.contains('open')?cancelForm():openAddForm();
-}
+function toggleForm(){ const f=document.getElementById('product-form'); f.classList.contains('open')?cancelForm():openAddForm(); }
 function openAddForm(){
   document.getElementById('form-title').textContent='Новый товар';
   ['edit-id','f-name','f-cat','f-price','f-desc','f-img'].forEach(id=>document.getElementById(id).value='');
@@ -823,52 +723,69 @@ function openAddForm(){
   document.getElementById('product-form').classList.add('open');
   document.getElementById('f-name').focus();
 }
-function cancelForm(){document.getElementById('product-form').classList.remove('open');}
+function cancelForm(){ document.getElementById('product-form').classList.remove('open'); }
+
 function editProduct(id){
-  const p=products.find(x=>x.id===id);if(!p)return;
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
   document.getElementById('form-title').textContent='Редактировать товар';
   document.getElementById('edit-id').value=p.id;
   document.getElementById('f-name').value=p.name;
   document.getElementById('f-cat').value=p.cat;
   document.getElementById('f-price').value=p.price;
   document.getElementById('f-badge').value=p.badge||'';
-  document.getElementById('f-desc').value=p.desc;
-  document.getElementById('f-img').value=p.img||'';
-  previewImg(p.img||'');
+  document.getElementById('f-desc').value=p.desc||'';
+  const imgs=parseImgs(p.img);
+  document.getElementById('f-img').value=imgs.join(', ');
+  previewImg(imgs[0]||'');
   document.getElementById('product-form').classList.add('open');
   document.getElementById('product-form').scrollIntoView({behavior:'smooth'});
 }
+
 function previewImg(val){
+  const first=(val||'').split(',')[0].trim();
   const prev=document.getElementById('img-preview');
-  if(!val.trim()){prev.innerHTML='👕';return;}
-  if(val.startsWith('http')||val.startsWith('/'))
-    prev.innerHTML=`<img src="${val}" alt="" onerror="this.innerHTML='❌'">`;
-  else prev.innerHTML=val;
+  if(!first){ prev.innerHTML='👕'; return; }
+  if(isUrl(first)) prev.innerHTML=`<img src="${first}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='❌'">`;
+  else prev.innerHTML=first;
 }
+
 function saveProduct(){
   const name=document.getElementById('f-name').value.trim();
   const cat=document.getElementById('f-cat').value.trim();
   const price=parseInt(document.getElementById('f-price').value);
   const badge=document.getElementById('f-badge').value||null;
   const desc=document.getElementById('f-desc').value.trim();
-  const img=document.getElementById('f-img').value.trim()||'👕';
+  const imgRaw=document.getElementById('f-img').value.trim()||'👕';
+  const imgs=imgRaw.split(',').map(s=>s.trim()).filter(Boolean);
   const editId=document.getElementById('edit-id').value;
-  if(!name||!cat||!price||!desc){showToast('Заполните все обязательные поля','error');return;}
+
+  if(!name||!cat||!price||!desc){ showToast('Заполните все обязательные поля','error'); return; }
+
   if(editId){
     const idx=products.findIndex(p=>p.id===parseInt(editId));
-    if(idx!==-1){products[idx]={...products[idx],name,cat,price,badge,desc,img};showToast(`«${name}» обновлён`,'success');}
-  }else{
-    const newId=products.length?Math.max(...products.map(p=>p.id))+1:1;
-    products.push({id:newId,name,cat,price,badge,desc,img});
+    if(idx!==-1) products[idx]={...products[idx],name,cat,price,badge,desc,img:imgs};
+    showToast(`«${name}» обновлён`,'success');
+  } else {
+    products.push({id:nextId++,name,cat,price,badge,desc,img:imgs});
     showToast(`«${name}» добавлен`,'success');
   }
-  saveProducts();cancelForm();refreshAdmin();buildFilters();renderProducts();
+  dbSave(products);
+  cancelForm();
+  refreshAdmin();
+  buildFilters();
+  renderProducts();
 }
+
 function deleteProduct(id){
-  const p=products.find(x=>x.id===id);if(!p)return;
-  if(!confirm(`Удалить товар «${p.name}»?`))return;
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
+  if(!confirm(`Удалить «${p.name}»?`)) return;
   products=products.filter(x=>x.id!==id);
-  saveProducts();refreshAdmin();buildFilters();renderProducts();
+  dbSave(products);
+  refreshAdmin();
+  buildFilters();
+  renderProducts();
   showToast(`«${p.name}» удалён`,'success');
 }
 
@@ -876,47 +793,34 @@ let toastTimer;
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg;
-  document.getElementById('toast-icon').textContent=type==='success'?'✅':'❌';
+  document.getElementById('toast-icon').textContent=type==='success'?'✓  ':'✕  ';
   t.className=`toast ${type} show`;
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
+// ── INIT ──
 buildFilters();
 renderProducts();
+setTimeout(()=>document.getElementById('splash').classList.add('hide'),2000);
 
-// SPLASH SCREEN LOGIC
-function hideSplashScreen(){
-  const splash = document.getElementById('splash-screen');
-  if(splash){
-    splash.classList.add('hidden');
+// Admin route: /admin path or #admin hash (for local file testing)
+function checkAdminRoute(){
+  const path = window.location.pathname;
+  const hash = window.location.hash;
+
+  if (
+    path.endsWith('/admin') ||
+    path.endsWith('/admin/') ||
+    hash === '#admin' ||
+    hash === '#/admin'
+  ) {
+    setTimeout(openAdminLogin, 250);
   }
 }
-setTimeout(hideSplashScreen, 3800);
-
-// URL ROUTING
-function checkUrlPath(){
-  const path=window.location.hash.slice(1)||window.location.pathname;
-  if(path.includes('ismatilla_admin')){
-    setTimeout(()=>openAdminLogin(),200);
-  }
-}
-checkUrlPath();
-window.addEventListener('hashchange',checkUrlPath);
-
-// 404 ERROR HANDLING - Обработка неправильных путей
-window.addEventListener('load', () => {
-  const validPaths = ['', '/', 'index.html', '#', '#ismatilla_admin', '#Все', '#Базовые', '#Принты'];
-  const currentPath = window.location.pathname + window.location.hash;
-  const isValidPath = validPaths.some(p => currentPath.includes(p)) || currentPath.endsWith('index.html');
-
-  // Если путь не валидный и не главная страница
-  if(window.location.pathname !== '/' && !window.location.pathname.includes('index.html') && !isValidPath) {
-    window.location.href = './404.html';
-  }
-});
-
-
+checkAdminRoute();
+window.addEventListener('popstate',checkAdminRoute);
+window.addEventListener('hashchange',checkAdminRoute);
 </script>
 </body>
 </html>
