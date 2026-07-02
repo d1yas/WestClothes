@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WestClothes — Premium Clothing</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --navy:#0a2540;--blue:#1e3a8a;--sky:#2563eb;--ice:#dbeafe;--ice2:#bfdbfe;
+            --white:#ffffff;--g50:#f8fafc;--g100:#f1f5f9;--g200:#e2e8f0;--g300:#cbd5e1;
+            --g500:#64748b;--g600:#475569;--g700:#334155;--g800:#1e293b;--g900:#0f172a;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:var(--white);color:var(--g800);overflow-x:hidden}
+
+        /* NAVBAR */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .3s ease;padding:1.25rem 0}
+        .nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);box-shadow:0 1px 30px rgba(10,37,64,.08);padding:.8rem 0}
+        .nav-inner{max-width:1320px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:1.6rem;font-weight:900;letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+        .logo-w{color:var(--navy)}
+        .logo-b{color:var(--blue)}
+        .nav:not(.scrolled) .logo-w{color:var(--white)}
+        .nav:not(.scrolled) .logo-b{color:var(--ice2)}
+        .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+        .nav-links a{text-decoration:none;font-weight:500;font-size:.95rem;transition:color .3s;position:relative}
+        .nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.85)}
+        .nav:not(.scrolled) .nav-links a:hover{color:var(--white)}
+        .nav.scrolled .nav-links a{color:var(--g600)}
+        .nav.scrolled .nav-links a:hover{color:var(--blue)}
+        .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--blue);transition:width .3s}
+        .nav-links a:hover::after{width:100%}
+        .nav-cta{background:var(--blue);color:var(--white)!important;padding:.55rem 1.4rem;border-radius:50px;font-weight:600;font-size:.9rem}
+        .nav-cta:hover{background:var(--navy);transform:translateY(-1px)}
+        .nav-cta::after{display:none!important}
+        .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+        .burger span{width:24px;height:2px;background:var(--g800);transition:all .3s}
+        .nav:not(.scrolled) .burger span{background:var(--white)}
+
+        /* HERO */
+        .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;
+            background:linear-gradient(135deg,var(--navy) 0%,#0d3b66 40%,var(--blue) 100%)}
+        .hero-shapes{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+        .hero-shapes .shape{position:absolute;border-radius:50%;opacity:.08;background:var(--white)}
+        .hero-shapes .s1{width:600px;height:600px;top:-200px;right:-100px;animation:float 8s ease-in-out infinite}
+        .hero-shapes .s2{width:400px;height:400px;bottom:-100px;left:-100px;animation:float 10s ease-in-out infinite reverse}
+        .hero-shapes .s3{width:200px;height:200px;top:40%;left:30%;animation:float 6s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+        .hero-grid{position:absolute;inset:0;background-image:
+            linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+            background-size:60px 60px}
+        .hero-content{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:8rem 2rem 6rem;width:100%;
+            display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+        .hero-text{color:var(--white)}
+        .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.12);
+            border:1px solid rgba(255,255,255,.2);padding:.4rem 1.2rem;border-radius:50px;font-size:.85rem;
+            font-weight:500;margin-bottom:2rem;backdrop-filter:blur(10px);animation:fadeUp .8s ease both}
+        .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;
+            line-height:1.05;margin-bottom:1.5rem;animation:fadeUp .8s ease .15s both}
+        .hero-title span{color:var(--ice2)}
+        .hero-desc{font-size:1.15rem;color:rgba(255,255,255,.75);max-width:500px;line-height:1.7;
+            margin-bottom:2.5rem;animation:fadeUp .8s ease .3s both}
+        .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s ease .45s both}
+        .btn{padding:.9rem 2rem;border-radius:50px;text-decoration:none;font-weight:600;font-size:.95rem;
+            transition:all .3s ease;display:inline-flex;align-items:center;gap:.5rem;border:none;cursor:pointer}
+        .btn-w{background:var(--white);color:var(--navy)}
+        .btn-w:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+        .btn-outline-w{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.3)}
+        .btn-outline-w:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+        .hero-visual{display:flex;justify-content:center;align-items:center;animation:fadeUp .8s ease .3s both}
+        .hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);
+            border-radius:24px;padding:2rem;width:100%;max-width:380px}
+        .hero-card-title{color:var(--white);font-size:1rem;font-weight:600;margin-bottom:1.5rem;
+            display:flex;align-items:center;gap:.5rem}
+        .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .hero-stat{background:rgba(255,255,255,.08);border-radius:16px;padding:1.25rem;text-align:center}
+        .hero-stat-num{font-size:2rem;font-weight:800;color:var(--white)}
+        .hero-stat-label{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:.3rem}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+        /* MARQUEE */
+        .marquee{background:var(--navy);padding:.8rem 0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.1)}
+        .marquee-track{display:flex;gap:3rem;animation:scroll 20s linear infinite;white-space:nowrap}
+        .marquee-item{color:rgba(255,255,255,.5);font-size:.85rem;font-weight:500;display:flex;align-items:center;gap:.5rem}
+        .marquee-item i{color:var(--blue)}
+        @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        /* SECTION COMMON */
+        .section{padding:6rem 2rem}
+        .container{max-width:1320px;margin:0 auto}
+        .sec-head{text-align:center;margin-bottom:4rem}
+        .sec-label{display:inline-block;color:var(--blue);font-size:.85rem;font-weight:700;text-transform:uppercase;
+            letter-spacing:2px;margin-bottom:.75rem}
+        .sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--g900)}
+        .sec-desc{color:var(--g500);font-size:1.05rem;margin-top:.75rem;max-width:550px;margin-left:auto;margin-right:auto}
+
+        /* CATEGORIES */
+        .cat-section{background:var(--g50)}
+        .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+        .cat-card{background:var(--white);border-radius:20px;overflow:hidden;transition:all .4s ease;
+            cursor:pointer;border:1px solid var(--g200);text-decoration:none;color:inherit;position:relative}
+        .cat-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(10,37,64,.1);border-color:var(--blue)}
+        .cat-card-top{height:160px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;
+            background:linear-gradient(135deg,var(--ice),var(--ice2));position:relative;overflow:hidden}
+        .cat-card-top::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(37,99,235,.1));pointer-events:none}
+        .cat-card-body{padding:1.5rem}
+        .cat-card-name{font-size:1.25rem;font-weight:700;color:var(--g900);margin-bottom:.35rem}
+        .cat-card-desc{font-size:.9rem;color:var(--g500);line-height:1.5}
+        .cat-card-count{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.8rem;
+            color:var(--blue);font-weight:600}
+        .cat-card-arrow{position:absolute;top:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;
+            background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--blue);
+            transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+        .cat-card:hover .cat-card-arrow{background:var(--blue);color:var(--white)}
+
+        /* FEATURED */
+        .feat-section{background:var(--white)}
+        .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+        .prod-card{background:var(--white);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer;
+            border:1px solid var(--g200);text-decoration:none;color:inherit}
+        .prod-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(10,37,64,.1);border-color:var(--blue)}
+        .prod-img{width:100%;height:280px;background:linear-gradient(135deg,var(--ice),var(--g100));
+            display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden}
+        .prod-img img{width:100%;height:100%;object-fit:cover}
+        .prod-badge{position:absolute;top:.75rem;left:.75rem;padding:.3rem .9rem;border-radius:20px;
+            font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+        .badge-new{background:var(--blue);color:var(--white)}
+        .badge-hot{background:#ef4444;color:var(--white)}
+        .badge-sale{background:#f59e0b;color:var(--white)}
+        .prod-body{padding:1.25rem}
+        .prod-cat{font-size:.75rem;color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem}
+        .prod-name{font-size:1.05rem;font-weight:700;color:var(--g900);margin-bottom:.5rem}
+        .prod-price{display:flex;align-items:center;gap:.6rem}
+        .price-now{font-size:1.2rem;font-weight:800;color:var(--navy)}
+        .price-old{font-size:.9rem;color:var(--g500);text-decoration:line-through}
+        .prod-sizes{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.75rem}
+        .size-tag{padding:.25rem .5rem;background:var(--g100);border-radius:4px;font-size:.7rem;font-weight:600;color:var(--g600)}
+
+        /* FEATURES */
+        .why-section{background:var(--g50)}
+        .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+        .why-card{background:var(--white);padding:2rem;border-radius:16px;text-align:center;border:1px solid var(--g200);transition:all .3s}
+        .why-card:hover{transform:translateY(-5px);border-color:var(--blue);box-shadow:0 10px 30px rgba(37,99,235,.08)}
+        .why-icon{width:64px;height:64px;border-radius:16px;background:var(--ice);display:flex;align-items:center;
+            justify-content:center;margin:0 auto 1.25rem;font-size:1.5rem;color:var(--blue)}
+        .why-title{font-size:1.1rem;font-weight:700;color:var(--g900);margin-bottom:.5rem}
+        .why-desc{font-size:.9rem;color:var(--g500);line-height:1.6}
+
+        /* CTA */
+        .cta{padding:6rem 2rem;background:linear-gradient(135deg,var(--navy),var(--blue));text-align:center;position:relative;overflow:hidden}
+        .cta::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;border-radius:50%;
+            background:rgba(255,255,255,.05)}
+        .cta-inner{position:relative;z-index:1}
+        .cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--white);margin-bottom:1rem}
+        .cta-desc{color:rgba(255,255,255,.75);font-size:1.1rem;margin-bottom:2.5rem;max-width:500px;margin-left:auto;margin-right:auto}
+        .btn-cta{background:var(--white);color:var(--navy);padding:1rem 2.5rem;font-size:1.05rem}
+        .btn-cta:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,.25)}
+
+        /* FOOTER */
+        .footer{background:var(--g900);color:var(--white);padding:4rem 2rem 2rem}
+        .footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+        .footer-logo{font-size:1.6rem;font-weight:900;margin-bottom:1rem}
+        .footer-logo .logo-w{color:var(--white)}
+        .footer-logo .logo-b{color:var(--sky)}
+        .footer-about{color:var(--g500);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem}
+        .footer-social{display:flex;gap:.75rem}
+        .footer-social a{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.07);
+            display:flex;align-items:center;justify-content:center;color:var(--g500);transition:all .3s;text-decoration:none}
+        .footer-social a:hover{background:var(--blue);color:var(--white)}
+        .footer-col-title{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+            margin-bottom:1.25rem;color:var(--white)}
+        .footer-links{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+        .footer-links a{color:var(--g500);text-decoration:none;font-size:.9rem;transition:color .3s}
+        .footer-links a:hover{color:var(--sky)}
+        .footer-bottom{max-width:1320px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08);
+            display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .footer-copy{color:var(--g500);font-size:.85rem}
+
+        /* RESPONSIVE */
+        @media(max-width:968px){
+            .hero-content{grid-template-columns:1fr;text-align:center;padding-top:7rem}
+            .hero-desc{margin-left:auto;margin-right:auto}
+            .hero-actions{justify-content:center}
+            .hero-visual{display:none}
+            .footer-grid{grid-template-columns:1fr}
+        }
+        @media(max-width:768px){
+            .nav-links{display:none}
+            .burger{display:flex}
+            .section{padding:4rem 1.5rem}
+        }
+
+        /* SCROLL REVEAL */
+        .reveal{opacity:0;transform:translateY(40px);transition:all .7s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="{% url 'index' %}" class="logo">
+            <span class="logo-w">WEST</span><span class="logo-b">CLOTHES</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Bosh sahifa</a></li>
+            <li><a href="#categories">Kategoriyalar</a></li>
+            <li><a href="{% url 'catalog' %}">Katalog</a></li>
+            <li><a href="#why">Biz haqimizda</a></li>
+            <li><a href="{% url 'catalog' %}" class="nav-cta"><i class="fas fa-shopping-bag"></i> Xarid qilish</a></li>
+        </ul>
+        <button class="burger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-shapes">
+        <div class="shape s1"></div>
+        <div class="shape s2"></div>
+        <div class="shape s3"></div>
+    </div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+        <div class="hero-text">
+            <div class="hero-badge"><i class="fas fa-sparkles"></i> Yangi Kolleksiya 2025</div>
+            <h1 class="hero-title">Uslubingizni <span>WestClothes</span> bilan toping</h1>
+            <p class="hero-desc">Premium sifatli kiyimlar — yuqori moda, hamyonbop narxlar. Futbolkalar, kurtkalar, shimlar, oyoq kiyimlar va aksessuarlar.</p>
+            <div class="hero-actions">
+                <a href="{% url 'catalog' %}" class="btn btn-w"><i class="fas fa-shopping-bag"></i> Katalogni ko'rish</a>
+                <a href="#categories" class="btn btn-outline-w"><i class="fas fa-th-large"></i> Kategoriyalar</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="hero-card-title"><i class="fas fa-chart-line"></i> WestClothes statistikalar</div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="hero-stat-num" id="statProducts">0</div><div class="hero-stat-label">Mahsulotlar</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num" id="statCats">0</div><div class="hero-stat-label">Kategoriyalar</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num" id="statNew">0</div><div class="hero-stat-label">Yangi</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Qo'llab-quvvatlash</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+    <div class="marquee-track">
+        <span class="marquee-item"><i class="fas fa-truck-fast"></i> Tez yetkazib berish</span>
+        <span class="marquee-item"><i class="fas fa-shield-check"></i> Premium sifat</span>
+        <span class="marquee-item"><i class="fas fa-tags"></i> Hamyonbop narxlar</span>
+        <span class="marquee-item"><i class="fas fa-rotate-left"></i> 14 kun qaytarish</span>
+        <span class="marquee-item"><i class="fas fa-star"></i> Yangi kolleksiya</span>
+        <span class="marquee-item"><i class="fas fa-fire"></i> Chegirmalar</span>
+        <span class="marquee-item"><i class="fas fa-truck-fast"></i> Tez yetkazib berish</span>
+        <span class="marquee-item"><i class="fas fa-shield-check"></i> Premium sifat</span>
+        <span class="marquee-item"><i class="fas fa-tags"></i> Hamyonbop narxlar</span>
+        <span class="marquee-item"><i class="fas fa-rotate-left"></i> 14 kun qaytarish</span>
+        <span class="marquee-item"><i class="fas fa-star"></i> Yangi kolleksiya</span>
+        <span class="marquee-item"><i class="fas fa-fire"></i> Chegirmalar</span>
+    </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section cat-section" id="categories">
+    <div class="container">
+        <div class="sec-head reveal">
+            <div class="sec-label">Kolleksiya</div>
+            <h2 class="sec-title">Kategoriyalar</h2>
+            <p class="sec-desc">Har bir uslub va mavsum uchun mukammal kiyimlar</p>
+        </div>
+        <div class="cat-grid" id="catGrid">
+            <!-- loaded dynamically -->
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section feat-section" id="featured">
+    <div class="container">
+        <div class="sec-head reveal">
+            <div class="sec-label">Tavsiya etamiz</div>
+            <h2 class="sec-title">Mashhur mahsulotlar</h2>
+            <p class="sec-desc">Eng ko'p sotilayotgan va yangi mahsulotlar</p>
+        </div>
+        <div class="feat-grid" id="featGrid">
+            <!-- loaded dynamically -->
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section class="section why-section" id="why">
+    <div class="container">
+        <div class="sec-head reveal">
+            <div class="sec-label">Afzalliklar</div>
+            <h2 class="sec-title">Nima uchun WestClothes?</h2>
+        </div>
+        <div class="why-grid">
+            <div class="why-card reveal">
+                <div class="why-icon"><i class="fas fa-truck-fast"></i></div>
+                <h3 class="why-title">Tez yetkazib berish</h3>
+                <p class="why-desc">Butun O'zbekiston bo'ylab 1-3 kun ichida yetkazib berish</p>
+            </div>
+            <div class="why-card reveal">
+                <div class="why-icon"><i class="fas fa-shield-check"></i></div>
+                <h3 class="why-title">Kafolatli sifat</h3>
+                <p class="why-desc">Faqat premium materiallar va professional tikuvchilik</p>
+            </div>
+            <div class="why-card reveal">
+                <div class="why-icon"><i class="fas fa-tags"></i></div>
+                <h3 class="why-title">Eng yaxshi narxlar</h3>
+                <p class="why-desc">Bozordagi eng hamyonbop narxlar va doimiy chegirmalar</p>
+            </div>
+            <div class="why-card reveal">
+                <div class="why-icon"><i class="fas fa-headset"></i></div>
+                <h3 class="why-title">24/7 qo'llab-quvvatlash</h3>
+                <p class="why-desc">Telegram orqali istalgan vaqtda bog'lanishingiz mumkin</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-inner">
+        <h2 class="cta-title">Uslubingizni bugun toping</h2>
+        <p class="cta-desc">Yangi kolleksiya uchun maxsus chegirmalar — qo'ldan boy bermang!</p>
+        <a href="{% url 'catalog' %}" class="btn btn-cta"><i class="fas fa-shopping-bag"></i> Hoziroq xarid qiling</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo"><span class="logo-w">WEST</span><span class="logo-b">CLOTHES</span></div>
+            <p class="footer-about">WestClothes — premium sifatli kiyimlar do'koni. Zamonaviy uslub, yuqori sifat va hamyonbop narxlar bir joyda.</p>
+            <div class="footer-social">
+                {% if admin_tg %}<a href="https://t.me/{{ admin_tg }}" target="_blank"><i class="fab fa-telegram"></i></a>{% endif %}
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div>
+            <div class="footer-col-title">Sahifalar</div>
+            <ul class="footer-links">
+                <li><a href="#home">Bosh sahifa</a></li>
+                <li><a href="{% url 'catalog' %}">Katalog</a></li>
+                <li><a href="#categories">Kategoriyalar</a></li>
+                <li><a href="#why">Biz haqimizda</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-col-title">Aloqa</div>
+            <ul class="footer-links">
+                {% if admin_tg %}<li><a href="https://t.me/{{ admin_tg }}" target="_blank"><i class="fab fa-telegram"></i> Telegram</a></li>{% endif %}
+                <li><a href="#"><i class="fas fa-envelope"></i> info@westclothes.uz</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> +998 90 123 45 67</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2025 WestClothes. Barcha huquqlar himoyalangan.</span>
+    </div>
+</footer>
+
+<script>
+// NAV scroll
+window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Reveal on scroll
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Load categories
+async function loadCategories(){
+    try{
+        const r=await fetch('/api/categories/');
+        const d=await r.json();
+        const cats=d.categories||[];
+        document.getElementById('statCats').textContent=cats.length;
+        const grid=document.getElementById('catGrid');
+        const icons={'upper-wear':'🧥','lower-wear':'👖','shoes':'👟','accessories':'🎒'};
+        grid.innerHTML=cats.map(c=>`
+            <a href="{% url 'catalog' %}?category=${c.slug}" class="cat-card reveal">
+                <div class="cat-card-top">${c.icon||icons[c.slug]||'👕'}</div>
+                <div class="cat-card-body">
+                    <h3 class="cat-card-name">${c.name}</h3>
+                    <p class="cat-card-desc">${c.description||''}</p>
+                    <span class="cat-card-count"><i class="fas fa-box"></i> ${c.subcategories_count} ta subkategoriya</span>
+                </div>
+                <div class="cat-card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </a>
+        `).join('');
+        document.querySelectorAll('.cat-card.reveal').forEach(el=>obs.observe(el));
+    }catch(e){console.error(e)}
+}
+
+// Load featured products
+async function loadFeatured(){
+    try{
+        const r=await fetch('/api/products/?badge=hot');
+        let prods=await r.json();
+        if(!prods.length){const r2=await fetch('/api/products/?badge=new');prods=await r2.json();}
+        if(!prods.length){const r3=await fetch('/api/products/');prods=(await r3.json()).slice(0,8);}
+        document.getElementById('statProducts').textContent=prods.length;
+        document.getElementById('statNew').textContent=prods.filter(p=>p.badge==='new').length;
+        const grid=document.getElementById('featGrid');
+        const badgeMap={'new':'Yangi','hot':'Hit','sale':'Chegirma'};
+        grid.innerHTML=prods.slice(0,8).map(p=>{
+            const dp=p.discount_percent>0?Math.round(p.price*(1-p.discount_percent/100)):null;
+            const img=p.images&&p.images[0]&&p.images[0].startsWith('http')
+                ?`<img src="${p.images[0]}" alt="${p.name}">`
+                :(p.images&&p.images[0]&&!p.images[0].startsWith('http')?p.images[0]:'👕');
+            return`<a href="{% url 'catalog' %}" class="prod-card reveal">
+                <div class="prod-img">${img}
+                    ${p.badge?`<span class="prod-badge badge-${p.badge}">${badgeMap[p.badge]||''}</span>`:''}
+                </div>
+                <div class="prod-body">
+                    <div class="prod-cat">${p.category_name||''}</div>
+                    <h3 class="prod-name">${p.name}</h3>
+                    <div class="prod-price">
+                        <span class="price-now">${fmt(dp||p.price)}</span>
+                        ${dp?`<span class="price-old">${fmt(p.price)}</span>`:''}
+                    </div>
+                    ${p.sizes&&p.sizes.length?`<div class="prod-sizes">${p.sizes.slice(0,4).map(s=>`<span class="size-tag">${s}</span>`).join('')}</div>`:''}
+                </div>
+            </a>`;
+        }).join('');
+        document.querySelectorAll('.prod-card.reveal').forEach(el=>obs.observe(el));
+    }catch(e){console.error(e)}
+}
+
+function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+" so'm"}
+
+loadCategories();
+loadFeatured();
+</script>
+</body>
+</html>

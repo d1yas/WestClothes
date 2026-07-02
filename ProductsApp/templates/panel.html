@@ -1,0 +1,1271 @@
+{% load shop_tags %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — WestClothes</title>
+<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --primary-blue: #1e3a8a;
+    --secondary-blue: #2563eb;
+    --light-blue: #bfdbfe;
+    --dark-blue: #1e293b;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+}
+
+body {
+    background: var(--gray-50);
+    color: var(--gray-800);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+/* Header */
+.admin-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(30, 64, 175, 0.2);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.5px;
+}
+
+.admin-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.header-right {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-link {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-danger-sm {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fecaca;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-danger-sm:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+/* Body Container */
+.admin-body {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Stats Cards */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(30, 64, 175, 0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-icon.blue { background: var(--light-blue); color: var(--primary-blue); }
+.stat-icon.green { background: #d1fae5; color: var(--success); }
+.stat-icon.orange { background: #fed7aa; color: var(--warning); }
+.stat-icon.purple { background: #e9d5ff; color: #9333ea; }
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gray-900);
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--gray-900);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--gray-800);
+    border: 2px solid var(--gray-200);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background: var(--gray-100);
+}
+
+/* Product Form */
+.product-form {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    display: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.product-form.open {
+    display: block;
+}
+
+.form-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-field.full {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    font-size: 0.85rem;
+    color: var(--gray-800);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-field input:not([type=checkbox]),
+.form-field select,
+.form-field textarea {
+    border: 2px solid var(--gray-200);
+    padding: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+    background: var(--white);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+}
+
+.form-field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
+.sizes-grid {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.size-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--gray-50);
+}
+
+.size-check:hover {
+    border-color: var(--secondary-blue);
+    background: var(--light-blue);
+}
+
+.size-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.size-check input:checked {
+    border-color: var(--primary-blue);
+    background: var(--primary-blue);
+}
+
+.size-check input:checked ~ span {
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+.size-check span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stock-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--gray-50);
+}
+
+.stock-label:hover {
+    border-color: var(--success);
+}
+
+.stock-label input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--success);
+    cursor: pointer;
+}
+
+.img-preview {
+    width: 60px;
+    height: 60px;
+    background: var(--gray-100);
+    border: 2px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.img-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.img-thumb {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--gray-200);
+    background: var(--gray-100);
+}
+
+.img-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-thumb.removed {
+    opacity: 0.4;
+}
+
+.img-thumb.removed::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(239,68,68,.15) 0 6px, transparent 6px 12px);
+}
+
+.img-thumb-x {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.6);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-thumb-x:hover {
+    background: var(--danger);
+}
+
+.img-thumb-restore {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-blue);
+    font-weight: 700;
+    display: none;
+}
+
+.img-thumb.removed .img-thumb-restore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.7);
+}
+
+.img-thumb.removed .img-thumb-x {
+    display: none;
+}
+
+.img-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.img-row .form-field {
+    flex: 1;
+}
+
+/* Table */
+.table-wrap {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    font-weight: 700;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: var(--gray-50);
+}
+
+.thumb {
+    width: 50px;
+    height: 50px;
+    background: var(--light-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.prod-name {
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.prod-cat {
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    margin-top: 0.25rem;
+}
+
+.prod-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.badge-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+}
+
+.badge-new {
+    background: var(--secondary-blue);
+    color: var(--white);
+}
+
+.badge-hot {
+    background: var(--danger);
+    color: var(--white);
+}
+
+.badge-sale {
+    background: var(--warning);
+    color: var(--white);
+}
+
+.badge-none {
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.sizes-list {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.tbl-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-edit {
+    background: var(--light-blue);
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-edit:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.btn-del {
+    background: #fee2e2;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-del:hover {
+    background: var(--danger);
+    color: var(--white);
+}
+
+.in-stock-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.in-stock-yes {
+    background: #d1fae5;
+    color: var(--success);
+}
+
+.in-stock-no {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+.empty {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--gray-600);
+}
+
+.empty i {
+    font-size: 4rem;
+    color: var(--gray-200);
+    margin-bottom: 1rem;
+}
+
+/* Modal */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--white);
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 15px;
+    position: relative;
+    animation: slideUp 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--gray-100);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--gray-600);
+    transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+    background: var(--gray-200);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .admin-body {
+        padding: 1rem;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="admin-header">
+    <div class="logo-section">
+        <span class="logo">WESTCLOTHES</span>
+        <span class="admin-badge">Admin Panel</span>
+    </div>
+    <div class="header-right">
+        <a class="btn-link" href="{% url 'index' %}">
+            <i class="fas fa-arrow-left"></i> Saytga qaytish
+        </a>
+        <a class="btn-danger-sm" href="{% url 'admin_logout' %}">
+            <i class="fas fa-sign-out-alt"></i> Chiqish
+        </a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="admin-body">
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="stat-label">Jami mahsulotlar</div>
+            <div class="stat-value">{{ stats.total }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <div class="stat-label">Kategoriyalar</div>
+            <div class="stat-value">{{ stats.cats }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-label">Yangi mahsulotlar</div>
+            <div class="stat-value">{{ stats.new }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <i class="fas fa-fire"></i>
+            </div>
+            <div class="stat-label">Hit mahsulotlar</div>
+            <div class="stat-value">{{ stats.hot }}</div>
+        </div>
+    </div>
+
+    <!-- Search by ID -->
+    <div style="background: var(--white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+        <form method="get" style="display: flex; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">
+                    Mahsulot ID bo'yicha qidirish
+                </label>
+                <input type="text" name="search_id" value="{{ search_id }}" 
+                       placeholder="ID kiriting..."
+                       style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: 8px;">
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-search"></i> Qidirish
+            </button>
+            {% if search_id %}
+            <a href="{% url 'admin_panel' %}" class="btn-secondary">
+                <i class="fas fa-times"></i> Tozalash
+            </a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+        <h1 class="section-title">Mahsulotlar</h1>
+        <button class="btn-primary" onclick="openAddForm()">
+            <i class="fas fa-plus"></i> Yangi mahsulot qo'shish
+        </button>
+    </div>
+
+    <!-- Add Product Form -->
+    <div class="product-form" id="addForm">
+        <h2 class="form-title">Yangi mahsulot qo'shish</h2>
+        <form action="{% url 'admin_product_add' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-field full">
+                    <label>Mahsulot nomi *</label>
+                    <input type="text" name="name" required placeholder="Masalan: Premium Futbolka">
+                </div>
+
+                <div class="form-field">
+                    <label>Kategoriya *</label>
+                    <select name="category" required>
+                        <option value="">Kategoriyani tanlang</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label>Subkategoriya</label>
+                    <select name="subcategory">
+                        <option value="">Subkategoriyani tanlang</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label>Narxi (so'm) *</label>
+                    <input type="number" name="price" required placeholder="150000">
+                </div>
+
+                <div class="form-field">
+                    <label>Chegirma (%)</label>
+                    <input type="number" name="discount_percent" value="0" min="0" max="100" placeholder="0">
+                </div>
+
+                <div class="form-field">
+                    <label>Belgi (Badge)</label>
+                    <select name="badge">
+                        <option value="">Yo'q</option>
+                        <option value="new">Yangi</option>
+                        <option value="hot">Hit</option>
+                        <option value="sale">Chegirma</option>
+                    </select>
+                </div>
+
+                <div class="form-field full">
+                    <label>Tavsif</label>
+                    <textarea name="description" placeholder="Mahsulot haqida ma'lumot..."></textarea>
+                </div>
+
+                <div class="form-field full">
+                    <label>Rasmlar (1 dan 6 tagacha) *</label>
+                    <input type="file" name="images" id="add_images" accept="image/*" multiple required>
+                    <span class="hint">Kamida 1, ko'pi bilan 6 ta rasm tanlang. Birinchi rasm — asosiy.</span>
+                    <div class="img-thumbs" id="add_images_preview"></div>
+                </div>
+
+                <div class="form-field full">
+                    <label>O'lchamlar</label>
+                    <div class="sizes-grid">
+                        {% for size in sizes_all %}
+                        <label class="size-check">
+                            <input type="checkbox" name="sizes" value="{{ size }}">
+                            <span>{{ size }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-field full">
+                    <label class="stock-label">
+                        <input type="checkbox" name="in_stock" checked>
+                        <span>Mavjud</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> Saqlash
+                </button>
+                <button type="button" class="btn-secondary" onclick="closeAddForm()">
+                    Bekor qilish
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Products Table -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rasm</th>
+                    <th>Mahsulot</th>
+                    <th>Kategoriya</th>
+                    <th>Narx</th>
+                    <th>Belgi</th>
+                    <th>O'lchamlar</th>
+                    <th>Mavjud</th>
+                    <th>Amallar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>
+                        <div class="thumb">
+                            {% if product.images and product.images.0 and not 'http' in product.images.0 %}
+                                {{ product.images.0 }}
+                            {% else %}
+                                👕
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-name">{{ product.name }}</div>
+                        <div class="prod-cat">ID: {{ product.id }}</div>
+                    </td>
+                    <td>
+                        <div class="prod-cat">{{ product.category.name }}</div>
+                        {% if product.subcategory %}
+                        <div class="prod-cat" style="margin-top: 2px;">→ {{ product.subcategory.name }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="prod-price">{{ product.price|price_format }}</div>
+                        {% if product.discount_percent > 0 %}
+                        <div style="font-size: 0.75rem; color: var(--success); margin-top: 2px;">
+                            -{{ product.discount_percent }}%
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if product.badge %}
+                        <span class="badge-tag badge-{{ product.badge }}">
+                            {% if product.badge == 'new' %}Yangi{% elif product.badge == 'hot' %}Hit{% elif product.badge == 'sale' %}Chegirma{% endif %}
+                        </span>
+                        {% else %}
+                        <span class="badge-tag badge-none">Yo'q</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="sizes-list">
+                            {% for size in product.sizes %}
+                                {{ size }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="in-stock-badge {% if product.in_stock %}in-stock-yes{% else %}in-stock-no{% endif %}">
+                            {% if product.in_stock %}Bor{% else %}Yo'q{% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="tbl-actions">
+                            <button class="btn-edit" onclick="openEdit({{ product.id }})">
+                                <i class="fas fa-edit"></i> Tahrirlash
+                            </button>
+                            <form action="{% url 'admin_product_delete' product.id %}" method="post" 
+                                  style="display: inline;" onsubmit="return confirm('O\'chirishni xohlaysizmi?')">
+                                {% csrf_token %}
+                                <button class="btn-del" type="submit">
+                                    <i class="fas fa-trash"></i> O'chirish
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="empty">
+                        <i class="fas fa-box-open"></i>
+                        <p>Mahsulotlar yo'q</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-backdrop" id="editModal">
+    <div class="modal-box">
+        <button class="modal-close-btn" onclick="closeEdit()">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2 class="form-title" style="margin-bottom: 1.5rem;">Mahsulotni tahrirlash</h2>
+        <form id="editForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-field full">
+                    <label>Mahsulot nomi *</label>
+                    <input type="text" name="name" required id="edit_name">
+                </div>
+
+                <div class="form-field">
+                    <label>Kategoriya *</label>
+                    <select name="category" required id="edit_category">
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label>Subkategoriya</label>
+                    <select name="subcategory" id="edit_subcategory">
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label>Narxi (so'm) *</label>
+                    <input type="number" name="price" required id="edit_price">
+                </div>
+
+                <div class="form-field">
+                    <label>Chegirma (%)</label>
+                    <input type="number" name="discount_percent" id="edit_discount" min="0" max="100">
+                </div>
+
+                <div class="form-field">
+                    <label>Belgi (Badge)</label>
+                    <select name="badge" id="edit_badge">
+                        <option value="">Yo'q</option>
+                        <option value="new">Yangi</option>
+                        <option value="hot">Hit</option>
+                        <option value="sale">Chegirma</option>
+                    </select>
+                </div>
+
+                <div class="form-field full">
+                    <label>Tavsif</label>
+                    <textarea name="description" id="edit_description"></textarea>
+                </div>
+
+                <div class="form-field full">
+                    <label>Mavjud rasmlar</label>
+                    <div class="img-thumbs" id="edit_existing_images"></div>
+                    <span class="hint">O'chirish uchun rasmga bosing (✕). Kamida 1 ta rasm qolishi shart.</span>
+                </div>
+
+                <div class="form-field full">
+                    <label>Yangi rasm qo'shish</label>
+                    <input type="file" name="images" id="edit_images_input" accept="image/*" multiple>
+                    <span class="hint">Jami ko'pi bilan 6 ta rasm bo'lishi mumkin.</span>
+                    <div class="img-thumbs" id="edit_images_preview"></div>
+                </div>
+
+                <div class="form-field full">
+                    <label>O'lchamlar</label>
+                    <div class="sizes-grid" id="edit_sizes">
+                        {% for size in sizes_all %}
+                        <label class="size-check">
+                            <input type="checkbox" name="sizes" value="{{ size }}">
+                            <span>{{ size }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-field full">
+                    <label class="stock-label">
+                        <input type="checkbox" name="in_stock" id="edit_in_stock">
+                        <span>Mavjud</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> Saqlash
+                </button>
+                <button type="button" class="btn-secondary" onclick="closeEdit()">
+                    Bekor qilish
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+const productsData = {{ products_json|safe }};
+const categoriesData = {{ categories_json|safe }};
+const sizesAll = {{ sizes_all_json|safe }};
+
+// Debug: check if categories have subcategories
+console.log('Categories data:', categoriesData);
+console.log('Total categories:', categoriesData.length);
+categoriesData.forEach(cat => {
+    console.log(`Category "${cat.name}" has ${cat.subcategories ? cat.subcategories.length : 0} subcategories`);
+});
+
+// Add form handlers
+function openAddForm() {
+    document.getElementById('addForm').classList.add('open');
+    populateCategorySelects('addForm');
+}
+
+function closeAddForm() {
+    document.getElementById('addForm').classList.remove('open');
+}
+
+// Initialize category selects on page load for add form
+document.addEventListener('DOMContentLoaded', function() {
+    populateCategorySelects('addForm');
+});
+
+// Edit modal handlers
+function openEdit(productId) {
+    console.log('openEdit called with productId:', productId);
+    console.log('productsData:', productsData);
+
+    const product = productsData.find(p => p.id === productId);
+    if (!product) {
+        console.error('Product not found with id:', productId);
+        alert('Mahsulot topilmadi!');
+        return;
+    }
+
+    console.log('Found product:', product);
+
+    // First, open the modal
+    document.getElementById('editModal').classList.add('open');
+
+    // Then populate the form
+    setTimeout(() => {
+        try {
+            document.getElementById('editForm').action = `/admin/products/${productId}/edit`;
+            document.getElementById('edit_name').value = product.name;
+            document.getElementById('edit_price').value = product.price;
+            document.getElementById('edit_discount').value = product.discount_percent;
+            document.getElementById('edit_badge').value = product.badge || '';
+            document.getElementById('edit_description').value = product.description;
+            document.getElementById('edit_in_stock').checked = product.in_stock;
+
+            populateCategorySelects('editForm', product.category, product.subcategory);
+            populateSizeCheckboxes('edit_sizes', product.sizes);
+
+            // Show existing images
+            const existingImagesContainer = document.getElementById('edit_existing_images');
+            if (existingImagesContainer && product.images && product.images.length > 0) {
+                existingImagesContainer.innerHTML = product.images.map((img, idx) => `
+                    <div class="img-thumb" data-img-idx="${idx}">
+                        ${img.startsWith('http') ? `<img src="${img}" alt="Image ${idx+1}">` : img}
+                    </div>
+                `).join('');
+            }
+
+            console.log('Form populated successfully');
+        } catch (error) {
+            console.error('Error populating form:', error);
+            alert('Xatolik yuz berdi: ' + error.message);
+        }
+    }, 50);
+}
+
+function closeEdit() {
+    document.getElementById('editModal').classList.remove('open');
+}
+
+// Populate category selects
+function populateCategorySelects(formId, selectedCatId = null, selectedSubcatId = null) {
+    const form = document.getElementById(formId);
+    const categorySelect = form.querySelector('select[name="category"]');
+    const subcategorySelect = form.querySelector('select[name="subcategory"]');
+
+    categorySelect.innerHTML = '<option value="">Kategoriyani tanlang</option>';
+
+    categoriesData.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        option.textContent = cat.name;
+        if (selectedCatId && cat.id == selectedCatId) {
+            option.selected = true;
+        }
+        categorySelect.appendChild(option);
+    });
+
+    // Remove existing event listeners by cloning
+    const newCategorySelect = categorySelect.cloneNode(true);
+    categorySelect.parentNode.replaceChild(newCategorySelect, categorySelect);
+
+    // Add event listener for category change
+    newCategorySelect.addEventListener('change', function() {
+        updateSubcategorySelect(formId, this.value);
+    });
+
+    if (selectedCatId) {
+        updateSubcategorySelect(formId, selectedCatId, selectedSubcatId);
+    } else {
+        subcategorySelect.innerHTML = '<option value="">Kategoriyani tanlang</option>';
+    }
+}
+
+// Update subcategory select
+function updateSubcategorySelect(formId, categoryId, selectedSubcatId = null) {
+    const form = document.getElementById(formId);
+    const subcategorySelect = form.querySelector('select[name="subcategory"]');
+
+    subcategorySelect.innerHTML = '<option value="">Subkategoriyani tanlang</option>';
+
+    if (categoryId) {
+        const category = categoriesData.find(c => c.id == categoryId);
+        if (category && category.subcategories && category.subcategories.length > 0) {
+            category.subcategories.forEach(subcat => {
+                const option = document.createElement('option');
+                option.value = subcat.id;
+                option.textContent = subcat.name;
+                if (selectedSubcatId && subcat.id == selectedSubcatId) {
+                    option.selected = true;
+                }
+                subcategorySelect.appendChild(option);
+            });
+        }
+    }
+}
+
+// Populate size checkboxes
+function populateSizeCheckboxes(containerId, selectedSizes) {
+    const container = document.getElementById(containerId);
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    
+    checkboxes.forEach(cb => {
+        cb.checked = selectedSizes.includes(cb.value);
+    });
+}
+
+// Close modal on outside click
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeEdit();
+    }
+});
+</script>
+
+</body>
+</html>
