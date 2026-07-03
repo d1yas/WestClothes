@@ -85,6 +85,20 @@
             justify-content:center;font-size:5rem;position:relative;overflow:hidden}
         .p-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
         .p-card:hover .p-img img{transform:scale(1.05)}
+        .p-img-carousel{position:relative;width:100%;height:100%}
+        .p-img-slide{width:100%;height:100%;display:none;align-items:center;justify-content:center}
+        .p-img-slide.active{display:flex}
+        .p-img-slide img{width:100%;height:100%;object-fit:cover}
+        .p-carousel-nav{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10}
+        .p-carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .3s}
+        .p-carousel-dot.active{background:var(--white);width:24px;border-radius:4px}
+        .p-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;
+            background:rgba(255,255,255,.9);display:none;align-items:center;justify-content:center;cursor:pointer;
+            z-index:10;color:var(--g800);transition:all .2s;font-size:.9rem}
+        .p-img-carousel:hover .p-carousel-arrow{display:flex}
+        .p-carousel-arrow:hover{background:var(--white);transform:translateY(-50%) scale(1.1)}
+        .p-carousel-prev{left:10px}
+        .p-carousel-next{right:10px}
         .p-badge{position:absolute;top:.75rem;left:.75rem;padding:.3rem .8rem;border-radius:20px;font-size:.7rem;font-weight:700;
             text-transform:uppercase;letter-spacing:.5px}
         .b-new{background:var(--blue);color:var(--white)}
@@ -252,14 +266,10 @@
             <div class="modal-prod" id="modalProd"></div>
             <form id="orderForm">
                 <div class="fg">
-                    <label>O'lcham *</label>
+                    <label>O'lcham</label>
                     <div class="size-select" id="sizeSelect"></div>
                 </div>
-                <div class="fg">
-                    <label>Aloqa (Telegram yoki telefon)</label>
-                    <input type="text" id="orderContact" placeholder="@username yoki +998...">
-                </div>
-                <button type="submit" class="btn-send"><i class="fas fa-paper-plane"></i> Buyurtma yuborish</button>
+                <button type="submit" class="btn-send"><i class="fab fa-telegram"></i> Telegram orqali buyurtma berish</button>
             </form>
         </div>
     </div>
@@ -375,13 +385,34 @@ function renderProducts(prods){
         return;
     }
     const bm={'new':'Yangi','hot':'Hit','sale':'Chegirma'};
-    g.innerHTML=prods.map(p=>{
+    g.innerHTML=prods.map((p,idx)=>{
         const dp=p.discount_percent>0?Math.round(p.price*(1-p.discount_percent/100)):null;
-        const img=p.images&&p.images[0]&&p.images[0].startsWith('http')
-            ?`<img src="${p.images[0]}" alt="${p.name}" loading="lazy">`
-            :(p.images&&p.images[0]&&!p.images[0].startsWith('http')?p.images[0]:'👕');
+        let imgHTML;
+        if(p.images&&p.images.length>1){
+            // Multiple images - create carousel
+            imgHTML=`<div class="p-img-carousel" data-product="${p.id}">
+                ${p.images.map((img,i)=>`<div class="p-img-slide ${i===0?'active':''}" data-slide="${i}">
+                    <img src="${img}" alt="${p.name}" loading="lazy">
+                </div>`).join('')}
+                <button class="p-carousel-arrow p-carousel-prev" onclick="event.stopPropagation();prevImage(${p.id})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="p-carousel-arrow p-carousel-next" onclick="event.stopPropagation();nextImage(${p.id})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="p-carousel-nav" onclick="event.stopPropagation()">
+                    ${p.images.map((img,i)=>`<span class="p-carousel-dot ${i===0?'active':''}" onclick="goToImage(${p.id},${i})"></span>`).join('')}
+                </div>
+            </div>`;
+        }else if(p.images&&p.images[0]){
+            // Single image
+            imgHTML=`<img src="${p.images[0]}" alt="${p.name}" loading="lazy">`;
+        }else{
+            // No image
+            imgHTML='👕';
+        }
         return`<div class="p-card" onclick="openModal(${p.id})">
-            <div class="p-img">${img}
+            <div class="p-img">${imgHTML}
                 ${p.badge?`<span class="p-badge b-${p.badge}">${bm[p.badge]||''}</span>`:''}
             </div>
             <div class="p-body">
@@ -407,9 +438,9 @@ function openModal(id){
     currentProduct=p;
     selectedSize='';
     const dp=p.discount_percent>0?Math.round(p.price*(1-p.discount_percent/100)):p.price;
-    const img=p.images&&p.images[0]&&p.images[0].startsWith('http')
+    const img=p.images&&p.images[0]
         ?`<img src="${p.images[0]}" alt="${p.name}">`
-        :(p.images&&p.images[0]&&!p.images[0].startsWith('http')?p.images[0]:'👕');
+        :'👕';
     document.getElementById('modalProd').innerHTML=`
         <div class="modal-prod-img">${img}</div>
         <div class="modal-prod-info">
@@ -434,21 +465,27 @@ function pickSize(el,s){
 
 function closeModal(){document.getElementById('orderModal').classList.remove('active');currentProduct=null}
 
-document.getElementById('orderForm').addEventListener('submit',async function(e){
+document.getElementById('orderForm').addEventListener('submit',function(e){
     e.preventDefault();
     if(!currentProduct)return;
-    if(!selectedSize&&currentProduct.sizes&&currentProduct.sizes.length){alert("Iltimos, o'lchamni tanlang!");return}
+    if(!selectedSize&&currentProduct.sizes&&currentProduct.sizes.length){
+        alert("Iltimos, o'lchamni tanlang!");
+        return;
+    }
     const dp=currentProduct.discount_percent>0?Math.round(currentProduct.price*(1-currentProduct.discount_percent/100)):currentProduct.price;
-    const contact=document.getElementById('orderContact').value;
-    try{
-        const r=await fetch('/api/send_order/',{
-            method:'POST',
-            headers:{'Content-Type':'application/json','X-CSRFToken':csrf()},
-            body:JSON.stringify({product_id:currentProduct.id,name:currentProduct.name,size:selectedSize,price:fmt(dp),contact})
-        });
-        if(r.ok){alert('Buyurtma yuborildi!');closeModal();this.reset();}
-        else alert('Xatolik. Qayta urinib ko\'ring.');
-    }catch(e){alert('Xatolik. Qayta urinib ko\'ring.')}
+
+    // Create message for Telegram
+    const sizePart=selectedSize?` | O'lcham: ${selectedSize}`:'';
+    const message=`🛒 Buyurtma\n\n👕 ${currentProduct.name}${sizePart}\n💰 Narx: ${fmt(dp)}`;
+
+    // Open Telegram with pre-filled message
+    const tgUsername='{{ admin_tg }}';
+    const encodedMessage=encodeURIComponent(message);
+    const tgUrl=`https://t.me/${tgUsername}?text=${encodedMessage}`;
+
+    window.open(tgUrl,'_blank');
+    closeModal();
+    this.reset();
 });
 
 function resetFilters(){
@@ -467,6 +504,46 @@ function csrf(){
 
 function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sidebarOverlay').classList.add('open')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open')}
+
+// Image carousel functions
+function nextImage(productId){
+    const carousel=document.querySelector(`.p-img-carousel[data-product="${productId}"]`);
+    if(!carousel)return;
+    const slides=carousel.querySelectorAll('.p-img-slide');
+    const dots=carousel.querySelectorAll('.p-carousel-dot');
+    let current=0;
+    slides.forEach((s,i)=>{if(s.classList.contains('active'))current=i});
+    const next=(current+1)%slides.length;
+    slides[current].classList.remove('active');
+    slides[next].classList.add('active');
+    dots[current].classList.remove('active');
+    dots[next].classList.add('active');
+}
+
+function prevImage(productId){
+    const carousel=document.querySelector(`.p-img-carousel[data-product="${productId}"]`);
+    if(!carousel)return;
+    const slides=carousel.querySelectorAll('.p-img-slide');
+    const dots=carousel.querySelectorAll('.p-carousel-dot');
+    let current=0;
+    slides.forEach((s,i)=>{if(s.classList.contains('active'))current=i});
+    const prev=(current-1+slides.length)%slides.length;
+    slides[current].classList.remove('active');
+    slides[prev].classList.add('active');
+    dots[current].classList.remove('active');
+    dots[prev].classList.add('active');
+}
+
+function goToImage(productId,index){
+    const carousel=document.querySelector(`.p-img-carousel[data-product="${productId}"]`);
+    if(!carousel)return;
+    const slides=carousel.querySelectorAll('.p-img-slide');
+    const dots=carousel.querySelectorAll('.p-carousel-dot');
+    slides.forEach(s=>s.classList.remove('active'));
+    dots.forEach(d=>d.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
 </script>
 </body>
 </html>

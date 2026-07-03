@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Product, Category, SubCategory, ProductImage
+from .forms import ProductAdminForm
 
 
 class ProductImageInline(admin.TabularInline):
@@ -32,6 +33,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductAdminForm
     list_display  = ('id', 'name', 'category', 'subcategory', 'price', 'badge', 'in_stock', 'created_at')
     list_filter   = ('category', 'subcategory', 'badge', 'in_stock')
     search_fields = ('name', 'description')
@@ -45,7 +47,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('name', 'category', 'subcategory', 'description', 'price', 'discount_percent'),
         }),
         ('Параметры', {
-            'fields': ('badge', 'in_stock', '_sizes'),
+            'fields': ('badge', 'in_stock', 'sizes'),
         }),
         ('Даты', {
             'fields': ('created_at', 'updated_at'),

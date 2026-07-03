@@ -421,9 +421,9 @@ async function loadFeatured(){
         const badgeMap={'new':'Yangi','hot':'Hit','sale':'Chegirma'};
         grid.innerHTML=prods.slice(0,8).map(p=>{
             const dp=p.discount_percent>0?Math.round(p.price*(1-p.discount_percent/100)):null;
-            const img=p.images&&p.images[0]&&p.images[0].startsWith('http')
+            const img=p.images&&p.images[0]
                 ?`<img src="${p.images[0]}" alt="${p.name}">`
-                :(p.images&&p.images[0]&&!p.images[0].startsWith('http')?p.images[0]:'👕');
+                :'👕';
             return`<a href="{% url 'catalog' %}" class="prod-card reveal">
                 <div class="prod-img">${img}
                     ${p.badge?`<span class="prod-badge badge-${p.badge}">${badgeMap[p.badge]||''}</span>`:''}
